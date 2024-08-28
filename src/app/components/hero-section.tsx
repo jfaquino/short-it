@@ -18,7 +18,6 @@ export default function HeroSection() {
             <div className="space-y-4">
                <div className="flex justify-center items-center space-x-2 mb-4">
                   <Image
-                     className=""
                      src="/short-it.svg"
                      width={40}
                      height={40}
