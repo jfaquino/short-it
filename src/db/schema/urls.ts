@@ -5,9 +5,9 @@ import { sql } from "drizzle-orm";
 export const urls = sqliteTable("url", {
    id: integer("id").primaryKey({ autoIncrement: true }),
    originalUrl: text("original_url").notNull(),
-   shortenedUrl: text("shortened_url").notNull().unique(),
+   shortCode: text("short_code").notNull().unique(),
    userId: text("userId").references(() => users.id, { onDelete: "set null" }),
-   createdAt: integer("created_at")
-      .default(sql`(CURENT_TIMESTAMP)`)
+   createdAt: integer("created_at", { mode: "timestamp" })
+      .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
 });
