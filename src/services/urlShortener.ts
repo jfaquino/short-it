@@ -3,8 +3,9 @@ import { urls } from "@/db/schema/urls";
 import { urlStats } from "@/db/schema/urlStats";
 import { users } from "@/db/schema/users";
 import { eq } from "drizzle-orm";
+import { createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
-const HOST_URL = "https://short-it-kappa.vercel.app/";
 const CHARACTERS =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const CODE_LENGTH = 6;
@@ -19,7 +20,7 @@ export async function createShortUrl(data: UrlData): Promise<string> {
       throw new Error("Invalid URL");
    }
 
-   const shortenedUrl = await generateUniqueShortenedUrl();
+   const shortCode = await generateUniqueShortCode();
 
    try {
       await db.transaction(async (trx) => {
@@ -35,30 +36,32 @@ export async function createShortUrl(data: UrlData): Promise<string> {
             }
          }
 
-         await trx.insert(urls).values({ ...data, shortenedUrl });
+         await trx.insert(urls).values({ ...data, shortCode });
       });
 
-      return shortenedUrl;
+      return shortCode;
    } catch (error) {
       console.error("Error creating short URL:", error);
       throw new Error("Failed to create short URL");
    }
 }
 
-export async function getOriginalUrl(
-   shortenedUrl: string
-): Promise<string | null> {
+const urlSchema = createSelectSchema(urls);
+
+export async function getUrlByShortCode(
+   shortCode: string
+): Promise<z.infer<typeof urlSchema> | null> {
    const result = await db
       .select()
       .from(urls)
-      .where(eq(urls.shortenedUrl, shortenedUrl))
+      .where(eq(urls.shortCode, shortCode))
       .limit(1);
 
    if (result.length === 0) {
       return null;
    }
 
-   return result[0].originalUrl;
+   return result[0];
 }
 
 export type UrlAccessInfo = {
@@ -101,21 +104,20 @@ export async function recordUrlAccess(
    }
 }
 
-async function generateUniqueShortenedUrl(): Promise<string> {
-   let shortenedUrl: string;
+async function generateUniqueShortCode(): Promise<string> {
+   let shortCode: string;
    let isUnique = false;
 
    do {
-      const shortCode = generateShortCode();
-      shortenedUrl = HOST_URL + shortCode;
+      shortCode = generateShortCode();
       const existing = await db
          .select()
          .from(urls)
-         .where(eq(urls.shortenedUrl, shortenedUrl));
+         .where(eq(urls.shortCode, shortCode));
       isUnique = !existing[0];
    } while (!isUnique);
 
-   return shortenedUrl;
+   return shortCode;
 }
 
 function generateShortCode(): string {
