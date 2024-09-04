@@ -36,7 +36,7 @@ export default async function Header() {
                      </span>
                   </Link>
                </div>
-               <nav className="flex space-x-8">
+               {/* <nav className="flex space-x-8">
                   {navItems.map((item) => (
                      <Link
                         key={item.name}
@@ -46,7 +46,7 @@ export default async function Header() {
                         {item.name}
                      </Link>
                   ))}
-               </nav>
+               </nav> */}
                <AuthButton session={session} />
 
                {/* <div className="md:hidden">

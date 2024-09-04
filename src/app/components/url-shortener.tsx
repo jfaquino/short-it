@@ -53,7 +53,6 @@ export default function UrlShortener() {
          }
 
          const data = await response.json();
-         console.log(data);
 
          if (data.shortUrl) {
             setShortenedUrl(data.shortUrl);
