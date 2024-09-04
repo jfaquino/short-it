@@ -20,7 +20,7 @@ export default async function Header() {
    ];
 
    return (
-      <header className="fixed w-full bg-gradient-to-r from-gray-900 to-purple-900 text-white z-10">
+      <header className="w-full absolute top-0 bg-gradient-to-r from-gray-900 to-purple-900 text-white z-10">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
                <div className="flex items-center">
