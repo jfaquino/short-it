@@ -1,36 +1,46 @@
 import { Scissors, BarChart2, Link as LinkIcon } from "lucide-react";
-import Image from "next/image";
 import UrlShortener from "./url-shortener";
+import GlooBackground from "./gloo-background";
 
 export default function HeroSection() {
    return (
-      <section className="w-full min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-         <div className="max-w-4xl w-full space-y-8 text-center">
-            <div className="space-y-4">
-               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
-                  Make Your Links
-                  <br />
-                  <span className="text-purple-400">Tiny and Eye-Catching</span>
-               </h1>
-               <p className="text-xl sm:text-2xl text-gray-300">
-                  Create short, powerful links in seconds
-               </p>
-            </div>
+      <section
+         className="relative w-screen h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900 
+                     px-4 sm:px-6 lg:px-8 overflow-hidden"
+      >
+         {/* <!-- Background animation --/> */}
+         <GlooBackground />
 
-            <UrlShortener />
+         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center ">
+            <div className="max-w-4xl w-full space-y-8 text-center ">
+               <div className="space-y-4">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
+                     Make Your Links
+                     <br />
+                     <span className="text-purple-400">
+                        Tiny and Eye-Catching
+                     </span>
+                  </h1>
+                  <p className="text-xl sm:text-2xl text-gray-300">
+                     Create short, powerful links in seconds
+                  </p>
+               </div>
 
-            <div className="mt-12 flex flex-wrap justify-center gap-6">
-               <div className="flex items-center space-x-2 text-gray-300">
-                  <Scissors className="h-6 w-6 text-indigo-400" />
-                  <span>Quick link trimming</span>
-               </div>
-               <div className="flex items-center space-x-2 text-gray-300">
-                  <BarChart2 className="h-6 w-6 text-indigo-400" />
-                  <span>Detailed analytics</span>
-               </div>
-               <div className="flex items-center space-x-2 text-gray-300">
-                  <LinkIcon className="h-6 w-6 text-indigo-400" />
-                  <span>Custom short links</span>
+               <UrlShortener />
+
+               <div className="mt-12 flex flex-wrap justify-center gap-6">
+                  <div className="flex items-center space-x-2 text-gray-300">
+                     <Scissors className="h-6 w-6 text-indigo-400" />
+                     <span>Quick link trimming</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-gray-300">
+                     <BarChart2 className="h-6 w-6 text-indigo-400" />
+                     <span>Detailed analytics</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-gray-300">
+                     <LinkIcon className="h-6 w-6 text-indigo-400" />
+                     <span>Custom short links</span>
+                  </div>
                </div>
             </div>
          </div>
