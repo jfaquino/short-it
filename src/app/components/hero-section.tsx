@@ -1,6 +1,6 @@
 import { Scissors, BarChart2, Link as LinkIcon } from "lucide-react";
 import UrlShortener from "./url-shortener";
-import GlooBackground from "./gloo-background";
+import GooBackground from "./goo-background";
 
 export default function HeroSection() {
    return (
@@ -9,7 +9,7 @@ export default function HeroSection() {
                      px-4 sm:px-6 lg:px-8 overflow-hidden"
       >
          {/* <!-- Background animation --/> */}
-         <GlooBackground />
+         <GooBackground />
 
          <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center ">
             <div className="max-w-4xl w-full space-y-8 text-center ">

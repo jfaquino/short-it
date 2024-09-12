@@ -1,4 +1,4 @@
-export default function GlooBackground() {
+export default function GooBackground() {
    return (
       <div
          style={{ filter: "url(#goo) blur(40px)" }}
@@ -32,7 +32,7 @@ export default function GlooBackground() {
             style={{ "--goo-color": "168, 28, 247" }}
             className="absolute bg-[radial-gradient(circle_at_center,_rgba(var(--goo-color),_0.4)_0%,_rgba(var(--goo-color),_0)_50%)] bg-no-repeat
                   w-[var(--circle-size)] h-[var(--circle-size)] top-[calc(50%_-_var(--circle-size)_/2)] left-[calc(50%_-_var(--circle-size)_/2)] 
-                  origin-[calc(50%_-_400px)] animate-move-in-circle mix-blend-hard-light opacity-100"
+                  origin-[calc(50%_-_400px)] animate-move-in-circle mix-blend-hard-light opacity-100 delay-1000"
          />
          <div
             style={{ "--goo-color": "126, 34, 206" }}
