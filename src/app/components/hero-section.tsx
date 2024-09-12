@@ -4,14 +4,11 @@ import GooBackground from "./goo-background";
 
 export default function HeroSection() {
    return (
-      <section
-         className="relative w-screen h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900 
-                     px-4 sm:px-6 lg:px-8 overflow-hidden"
-      >
+      <section className="relative w-screen h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900 overflow-hidden">
          {/* <!-- Background animation --/> */}
          <GooBackground />
 
-         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center ">
+         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center  px-4 sm:px-6 lg:px-8 ">
             <div className="max-w-4xl w-full space-y-8 text-center ">
                <div className="space-y-4">
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
