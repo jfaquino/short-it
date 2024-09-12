@@ -22,7 +22,7 @@ export default function RootLayout({
       <html lang="en">
          <body className={inter.className}>
             <SessionProvider>
-               <div className="min-h-screen max-w-full bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900 ">
+               <div className="min-h-screen max-w-full  ">
                   <Header />
                   {children}
                </div>
