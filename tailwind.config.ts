@@ -91,6 +91,11 @@ const config = {
             "move-in-circle": "move-in-circle 20s reverse infinite",
             "move-in-circle-long": "move-in-circle 40s reverse infinite",
          },
+         transitionDelay: {
+            "minus-20s": "-20s",
+            "minus-15s": "-15s",
+            "minus-10s": "-10s",
+         },
       },
    },
    plugins: [require("tailwindcss-animate")],
