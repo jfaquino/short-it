@@ -11,9 +11,10 @@ export async function GET(
       const urlData = await getUrlByShortCode(shortCode);
 
       if (!urlData) {
-         return new NextResponse("Short URL not found", { status: 404 });
+         const urlNotFound = new URL("/404", request.url);
+         return NextResponse.redirect(urlNotFound);
       }
-      console.log(request.geo);
+      console.info(request.geo);
 
       await recordUrlAccess({
          urlId: urlData.id,
