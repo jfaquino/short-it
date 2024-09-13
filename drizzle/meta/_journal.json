@@ -36,6 +36,13 @@
       "when": 1725375947350,
       "tag": "0007_safe_slipstream",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1726255420355,
+      "tag": "0008_petite_mentallo",
+      "breakpoints": true
     }
   ]
 }

@@ -13,4 +13,9 @@ export const urlStats = sqliteTable("url_stats", {
    referrer: text("referrer"),
    userAgent: text("user_agent"),
    ipAddress: text("ip_address"),
+   country: text("country"),
+   city: text("city"),
+   deviceType: text("device_type"),
+   browser: text("browser"),
+   os: text("operating_system"),
 });
