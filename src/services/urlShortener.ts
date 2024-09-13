@@ -78,7 +78,17 @@ export type UrlAccessInfo = {
 export async function recordUrlAccess(
    accessInfo: UrlAccessInfo
 ): Promise<void> {
-   const { urlId, referrer, userAgent, ipAddress } = accessInfo;
+   const {
+      urlId,
+      referrer,
+      userAgent,
+      ipAddress,
+      country,
+      city,
+      deviceType,
+      browser,
+      os,
+   } = accessInfo;
 
    if (!urlId || typeof urlId !== "number") {
       throw new Error("Invalid urlId");
@@ -101,6 +111,11 @@ export async function recordUrlAccess(
             referrer,
             userAgent,
             ipAddress,
+            country,
+            city,
+            deviceType,
+            browser,
+            os,
          });
       });
    } catch (error) {

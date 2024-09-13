@@ -33,7 +33,7 @@ export async function GET(
          country: ipInfo ? ipInfo.country : null,
          city: ipInfo ? ipInfo.city : null,
          browser: browser.name || null,
-         deviceType: device.type || null,
+         deviceType: device.type || "desktop || laptop",
          os: os.name || null,
       });
 
