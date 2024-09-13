@@ -14,11 +14,11 @@ export async function GET(
          const urlNotFound = new URL("/404", request.url);
          return NextResponse.redirect(urlNotFound);
       }
-      console.info(request.geo);
 
       await recordUrlAccess({
          urlId: urlData.id,
-         ipAddress: request.ip || null,
+         ipAddress:
+            request.ip || request.headers.get("x-forwarded-for") || null,
          referrer: request.referrer || request.headers.get("referer") || null,
          userAgent: request.headers.get("user-agent") || null,
       });
