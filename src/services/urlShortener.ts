@@ -69,6 +69,11 @@ export type UrlAccessInfo = {
    referrer: string | null;
    userAgent: string | null;
    ipAddress: string | null;
+   country: string | null;
+   city: string | null;
+   deviceType: string | null;
+   browser: string | null;
+   os: string | null;
 };
 export async function recordUrlAccess(
    accessInfo: UrlAccessInfo
