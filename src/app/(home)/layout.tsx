@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-
-const inter = Inter({ subsets: ["latin"] });
+import Header from "./components/header";
 
 export const metadata: Metadata = {
    icons: "/short-it.svg",
@@ -18,12 +14,9 @@ export default function RootLayout({
    children: React.ReactNode;
 }>) {
    return (
-      <html lang="en">
-         <body className={inter.className}>
-            <SessionProvider>
-               <div className="min-h-screen max-w-full  ">{children}</div>
-            </SessionProvider>
-         </body>
-      </html>
+      <div className="min-h-screen max-w-full  ">
+         <Header />
+         {children}
+      </div>
    );
 }

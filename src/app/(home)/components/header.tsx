@@ -6,7 +6,7 @@ import Link from "next/link";
 // } from "@/components/ui/sheet"
 import Image from "next/image";
 import { auth } from "@/services/auth";
-import AuthButton from "./authButton";
+import AuthButton from "@/components/common/authButton";
 
 export default async function Header() {
    // const [isOpen, setIsOpen] = useState(false);

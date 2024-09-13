@@ -1,10 +1,10 @@
 import { Scissors, BarChart2, Link as LinkIcon } from "lucide-react";
 import UrlShortener from "./url-shortener";
-import GooBackground from "./goo-background";
+import GooBackground from "@/components/common/goo-background";
 
 export default function HeroSection() {
    return (
-      <section className="relative w-screen h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900 overflow-hidden">
+      <section className="relative w-full h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900 overflow-hidden">
          {/* <!-- Background animation --/> */}
          <GooBackground />
 
