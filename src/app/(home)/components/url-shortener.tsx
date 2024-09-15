@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/tooltip";
 import { QrCode, Copy, ExternalLink } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
 export default function UrlShortener() {
    const { data: session } = useSession();
-   const [showQR, setShowQR] = useState(false);
    const [loading, setLoading] = useState(false);
    const [shortenedUrl, setShortenedUrl] = useState<string | undefined>();
 
@@ -87,11 +87,26 @@ export default function UrlShortener() {
             </div>
          </form>
 
-         {shortenedUrl && (
-            <TooltipProvider>
-               <Card className="w-full max-w-lg mx-auto text-start">
+         <TooltipProvider>
+            <div
+               className={cn(
+                  "transition-all duration-500 ease-out transform",
+                  shortenedUrl
+                     ? "opacity-100 translate-y-0 h-auto"
+                     : "opacity-0 translate-y-10 h-0"
+               )}
+            >
+               <Card className="w-full max-w-lg mx-auto text-start ">
                   <CardContent className="space-y-4 pt-6">
-                     <div className="flex flex-col lg:flex-row justify-between items-end gap-4">
+                     <div
+                        className={cn(
+                           "flex flex-col lg:flex-row justify-between items-end gap-4",
+                           "transition-all duration-500 ease-out delay-100",
+                           shortenedUrl
+                              ? "opacity-100 translate-y-0 "
+                              : "opacity-0 translate-y-5"
+                        )}
+                     >
                         <div className="w-full max-w-lg">
                            <label
                               htmlFor="shortened-url"
@@ -110,19 +125,23 @@ export default function UrlShortener() {
                            </div>
                         </div>
 
-                        <div className="flex gap-2">
+                        <div
+                           className={cn(
+                              "flex gap-2",
+                              "transition-all duration-500 ease-out delay-200",
+                              shortenedUrl
+                                 ? "opacity-100 translate-y-0 "
+                                 : "opacity-0 translate-y-5"
+                           )}
+                        >
                            <Tooltip>
                               <TooltipTrigger asChild>
-                                 <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={() => setShowQR(!showQR)}
-                                 >
+                                 <Button variant="outline" size="icon">
                                     <QrCode className="h-4 w-4" />
                                  </Button>
                               </TooltipTrigger>
                               <TooltipContent>
-                                 <p>{showQR ? "Hide" : "Show"} QR Code</p>
+                                 <p> Show QR Code</p>
                               </TooltipContent>
                            </Tooltip>
                            <Tooltip>
@@ -157,21 +176,10 @@ export default function UrlShortener() {
                            </Tooltip>
                         </div>
                      </div>
-                     {/* <div>
-                     <label className="text-sm font-medium">Original URL</label>
-                     <p className="mt-1 text-sm text-muted-foreground break-all">
-                        {originalUrl}
-                     </p>
-                  </div> */}
-                     {showQR && (
-                        <div className="flex justify-center">
-                           <QrCode size={100} />
-                        </div>
-                     )}
                   </CardContent>
                </Card>
-            </TooltipProvider>
-         )}
+            </div>
+         </TooltipProvider>
       </>
    );
 }
