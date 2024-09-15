@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@/services/auth";
 import AuthButton from "@/components/common/authButton";
+import ShorItButton from "@/components/common/shorItButton";
 
 export default async function Header() {
    // const [isOpen, setIsOpen] = useState(false);
@@ -23,18 +24,8 @@ export default async function Header() {
       <header className="w-full absolute top-0 bg-gradient-to-b from-gray-900 to-transparent text-white pb-4 z-10">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
-               <div className="flex items-center">
-                  <Link href="/" className="flex items-center space-x-2">
-                     <Image
-                        src="/short-it.svg"
-                        width={36}
-                        height={36}
-                        alt="short-it logo"
-                     />
-                     <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
-                        Short-it
-                     </span>
-                  </Link>
+               <div>
+                  <ShorItButton />
                </div>
                {/* <nav className="flex space-x-8">
                   {navItems.map((item) => (
