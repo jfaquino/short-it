@@ -9,9 +9,14 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
+import { auth } from "@/services/auth";
 import { Copy, ExternalLink, Plus, Trash } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+   const session = await auth();
+   if (!session) return redirect("/login");
+
    return (
       <main className="flex-1 p-8 mt-12 overflow-y-auto">
          <div className="max-w-4xl mx-auto">
