@@ -8,17 +8,17 @@ export default function HeroSection() {
          {/* <!-- Background animation --/> */}
          <GooBackground />
 
-         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-center  px-4 sm:px-6 lg:px-8 ">
-            <div className="max-w-4xl w-full space-y-8 text-center ">
+         <div className="w-full h-full absolute top-0 left-0 flex justify-center items-start sm:items-center pt-24 sm:pt-0  px-4 sm:px-6 lg:px-8 ">
+            <div className="flex-1 h-1/2 max-w-4xl w-full space-y-8 text-center ">
                <div className="space-y-4">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
+                  <h1 className="text-2xl sm:text-5xl md:text-6xl font-extrabold text-white">
                      Make Your Links
                      <br />
                      <span className="text-purple-400">
                         Tiny and Eye-Catching
                      </span>
                   </h1>
-                  <p className="text-xl sm:text-2xl text-gray-300">
+                  <p className="text-lg sm:text-2xl text-gray-300 text-balance">
                      Create short, powerful links in seconds
                   </p>
                </div>
