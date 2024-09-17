@@ -1,9 +1,6 @@
 export default function GooBackground() {
    return (
-      <div
-         style={{ filter: "url(#goo) blur(40px)" }}
-         className="w-full h-full "
-      >
+      <div style={{ filter: "url(#goo)" }} className="w-full h-full ">
          <svg style={{ display: "none" }} xmlns="http://www.w3.org/2000/svg">
             <defs>
                <filter id="goo">
