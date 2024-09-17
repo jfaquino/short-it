@@ -90,21 +90,16 @@ export default function UrlShortener() {
          <TooltipProvider>
             <div
                className={cn(
-                  "transition-all duration-500 ease-out transform",
-                  shortenedUrl
-                     ? "opacity-100 translate-y-0 h-auto"
-                     : "opacity-0 translate-y-10 h-0"
+                  "transition-all duration-500 ease-out transform  opacity-100 translate-y-0 starting:block  starting:opacity-0 starting:translate-y-10 ",
+                  shortenedUrl ?? "hidden"
                )}
             >
-               <Card className="w-full max-w-lg mx-auto text-start ">
+               <Card className="w-full max-w-lg mx-auto text-start">
                   <CardContent className="space-y-4 pt-6">
                      <div
                         className={cn(
                            "flex flex-col lg:flex-row justify-between items-end gap-4",
-                           "transition-all duration-500 ease-out delay-100",
-                           shortenedUrl
-                              ? "opacity-100 translate-y-0 "
-                              : "opacity-0 translate-y-5"
+                           "transition-all duration-500 ease-out delay-100 opacity-100 translate-y-0 starting:opacity-0 starting:translate-y-5"
                         )}
                      >
                         <div className="w-full max-w-lg">
@@ -128,10 +123,7 @@ export default function UrlShortener() {
                         <div
                            className={cn(
                               "flex gap-2",
-                              "transition-all duration-500 ease-out delay-200",
-                              shortenedUrl
-                                 ? "opacity-100 translate-y-0 "
-                                 : "opacity-0 translate-y-5"
+                              "transition-all duration-500 ease-out delay-200 opacity-100 translate-y-0 starting:opacity-0 starting:translate-y-5"
                            )}
                         >
                            <Tooltip>
