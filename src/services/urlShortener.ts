@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { urls } from "@/db/schema/urls";
 import { urlStats } from "@/db/schema/urlStats";
 import { users } from "@/db/schema/users";
-import { aggregateOneToMany } from "@/lib/dbUtils";
 import { eq } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -129,18 +128,15 @@ const urlStatsSchema = createSelectSchema(urlStats);
 
 const getUrlResponse = urlSchema
    .extend({
-      url_stats: urlStatsSchema.array(),
+      urlStats: urlStatsSchema.array(),
    })
    .array();
 
 export async function getUrlByUser(userId: string) {
-   const urlList = await db
-      .select()
-      .from(urls)
-      .where(eq(urls.userId, userId))
-      .leftJoin(urlStats, eq(urls.id, urlStats.urlId))
-      .all()
-      .then((rows) => aggregateOneToMany(rows, "url", "url_stats"));
+   const urlList = await db.query.urls.findMany({
+      with: { urlStats: true },
+      where: eq(urls.userId, userId),
+   });
 
    return getUrlResponse.parse(urlList);
 }
