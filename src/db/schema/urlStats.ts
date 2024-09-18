@@ -7,7 +7,7 @@ export const urlStats = sqliteTable("url_stats", {
    urlId: integer("urlId")
       .notNull()
       .references(() => urls.id),
-   accessedAt: integer("accessed_at", { mode: "timestamp" })
+   accessedAt: text("accessed_at")
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
    referrer: text("referrer"),

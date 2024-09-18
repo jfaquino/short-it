@@ -10,12 +10,15 @@ import {
    TableRow,
 } from "@/components/ui/table";
 import { auth } from "@/services/auth";
+import { getUrlByUser } from "@/services/urlShortener";
 import { Copy, ExternalLink, Plus, Trash } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
    const session = await auth();
    if (!session) return redirect("/login");
+
+   const data = session.user?.id && (await getUrlByUser(session.user?.id));
 
    return (
       <main className="flex-1 p-8 mt-12 overflow-y-auto">
@@ -36,7 +39,7 @@ export default async function Dashboard() {
                      </CardTitle>
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">1,234</div>
+                     <div className="text-2xl font-bold">{data?.length}</div>
                   </CardContent>
                </Card>
                <Card>
@@ -82,46 +85,29 @@ export default async function Dashboard() {
                      </TableRow>
                   </TableHeader>
                   <TableBody>
-                     <TableRow>
-                        <TableCell>short.url/abc123</TableCell>
-                        <TableCell className="max-w-xs truncate">
-                           https://www.example.com/very-long-url-that-needs-shortening
-                        </TableCell>
-                        <TableCell>1,234</TableCell>
-                        <TableCell>
-                           <div className="flex space-x-2">
-                              <Button variant="outline" size="icon">
-                                 <ExternalLink className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Copy className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Trash className="h-4 w-4" />
-                              </Button>
-                           </div>
-                        </TableCell>
-                     </TableRow>
-                     <TableRow>
-                        <TableCell>short.url/def456</TableCell>
-                        <TableCell className="max-w-xs truncate">
-                           https://www.anotherexample.com/another-long-url-to-be-shortened
-                        </TableCell>
-                        <TableCell>5,678</TableCell>
-                        <TableCell>
-                           <div className="flex space-x-2">
-                              <Button variant="outline" size="icon">
-                                 <ExternalLink className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Copy className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Trash className="h-4 w-4" />
-                              </Button>
-                           </div>
-                        </TableCell>
-                     </TableRow>
+                     {data &&
+                        data.map((item) => (
+                           <TableRow key={item.id}>
+                              <TableCell>{item.shortCode}</TableCell>
+                              <TableCell className="max-w-xs truncate">
+                                 {item.originalUrl}
+                              </TableCell>
+                              <TableCell>{item.url_stats.length}</TableCell>
+                              <TableCell>
+                                 <div className="flex space-x-2">
+                                    <Button variant="outline" size="icon">
+                                       <ExternalLink className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="outline" size="icon">
+                                       <Copy className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="outline" size="icon">
+                                       <Trash className="h-4 w-4" />
+                                    </Button>
+                                 </div>
+                              </TableCell>
+                           </TableRow>
+                        ))}
                   </TableBody>
                </Table>
             </div>

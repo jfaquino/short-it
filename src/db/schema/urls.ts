@@ -7,7 +7,7 @@ export const urls = sqliteTable("url", {
    originalUrl: text("original_url").notNull(),
    shortCode: text("short_code").notNull().unique(),
    userId: text("userId").references(() => users.id, { onDelete: "set null" }),
-   createdAt: integer("created_at", { mode: "timestamp" })
+   createdAt: text("created_at")
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
 });

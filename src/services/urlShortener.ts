@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { urls } from "@/db/schema/urls";
 import { urlStats } from "@/db/schema/urlStats";
 import { users } from "@/db/schema/users";
+import { aggregateOneToMany } from "@/lib/dbUtils";
 import { eq } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -122,6 +123,26 @@ export async function recordUrlAccess(
       console.error("Error recording URL access:", error);
       throw error;
    }
+}
+
+const urlStatsSchema = createSelectSchema(urlStats);
+
+const getUrlResponse = urlSchema
+   .extend({
+      url_stats: urlStatsSchema.array(),
+   })
+   .array();
+
+export async function getUrlByUser(userId: string) {
+   const urlList = await db
+      .select()
+      .from(urls)
+      .where(eq(urls.userId, userId))
+      .leftJoin(urlStats, eq(urls.id, urlStats.urlId))
+      .all()
+      .then((rows) => aggregateOneToMany(rows, "url", "url_stats"));
+
+   return getUrlResponse.parse(urlList);
 }
 
 async function generateUniqueShortCode(): Promise<string> {
