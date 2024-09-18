@@ -1,6 +1,7 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
+import { urlStats } from "./urlStats";
 
 export const urls = sqliteTable("url", {
    id: integer("id").primaryKey({ autoIncrement: true }),
@@ -11,3 +12,7 @@ export const urls = sqliteTable("url", {
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
 });
+
+export const urlsRelations = relations(urls, ({ many }) => ({
+   urlStats: many(urlStats),
+}));
