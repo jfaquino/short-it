@@ -30,7 +30,9 @@ export default async function Dashboard() {
       : 0;
    const avgClicks = totalClicks / totalUrlCount || 0;
 
-   const getShortUrl = (shortCode: string): { label: string; url: string } => {
+   const generateShortUrl = (
+      shortCode: string
+   ): { label: string; url: string } => {
       if (!host || !shortCode) return { label: "", url: "" };
 
       try {
@@ -123,7 +125,7 @@ export default async function Dashboard() {
                         data.map((item) => (
                            <TableRow key={item.id}>
                               <TableCell>
-                                 {getShortUrl(item.shortCode).label}
+                                 {generateShortUrl(item.shortCode).label}
                               </TableCell>
                               <TableCell className="max-w-xs truncate">
                                  {item.originalUrl}
@@ -141,7 +143,10 @@ export default async function Dashboard() {
                                        asChild
                                     >
                                        <Link
-                                          href={getShortUrl(item.shortCode).url}
+                                          href={
+                                             generateShortUrl(item.shortCode)
+                                                .url
+                                          }
                                           target="_blank"
                                        >
                                           <ExternalLink className="h-4 w-4" />
