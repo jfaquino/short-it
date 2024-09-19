@@ -1,7 +1,3 @@
-"use client";
-
-import { signIn } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 import {
    Card,
    CardContent,
@@ -9,13 +5,15 @@ import {
    CardHeader,
    CardTitle,
 } from "@/components/ui/card";
-import { GithubIcon } from "@/components/icons/github-icon";
 import ShorItButton from "@/components/links/shorItButton";
+import { auth } from "@/server/services/auth";
+import { redirect } from "next/navigation";
+import GithubSigninButton from "@/components/auth/github-signin-button";
 
-export default function LoginPage() {
-   const handleGitHubSignIn = () => {
-      signIn("github", { callbackUrl: "/dashboard" });
-   };
+export default async function LoginPage() {
+   const session = await auth();
+
+   if (session) return redirect("/dashboard");
 
    return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100 px-2">
@@ -31,14 +29,7 @@ export default function LoginPage() {
                </CardDescription>
             </CardHeader>
             <CardContent>
-               <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={handleGitHubSignIn}
-               >
-                  <GithubIcon className="mr-2 h-4 w-4" />
-                  GitHub
-               </Button>
+               <GithubSigninButton />
             </CardContent>
          </Card>
       </div>
