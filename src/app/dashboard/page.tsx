@@ -9,14 +9,12 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
-import { formatNumber } from "@/lib/utils";
-import { auth } from "@/services/auth";
-import { getUrlByUser } from "@/services/urlShortener";
+import { formatNumber, generateShortUrl } from "@/lib/utils";
+import { auth } from "@/server/services/auth";
+import { getUrlByUser } from "@/server/services/urlShortener";
 import { Copy, ExternalLink, Plus, Trash } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
-const host = process.env.HOST_URL;
 
 export default async function Dashboard() {
    const session = await auth();
@@ -29,20 +27,6 @@ export default async function Dashboard() {
       ? (data?.map((item) => item.urlStats ?? []) ?? []).flat().length
       : 0;
    const avgClicks = totalClicks / totalUrlCount || 0;
-
-   const generateShortUrl = (
-      shortCode: string
-   ): { label: string; url: string } => {
-      if (!host || !shortCode) return { label: "", url: "" };
-
-      try {
-         const url = new URL(shortCode, host);
-         return { label: `${url.host}${url.pathname}`, url: url.toString() };
-      } catch (error) {
-         console.error("Invalid URL:", error);
-         return { label: "", url: "" };
-      }
-   };
 
    return (
       <main className="flex-1 p-8 overflow-y-auto">

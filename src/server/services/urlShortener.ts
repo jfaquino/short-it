@@ -2,13 +2,10 @@ import { db } from "@/db";
 import { urls } from "@/db/schema/urls";
 import { urlStats } from "@/db/schema/urlStats";
 import { users } from "@/db/schema/users";
+import { generateShortCode, isValidUrl } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-
-const CHARACTERS =
-   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-const CODE_LENGTH = 6;
 
 export type UrlData = {
    originalUrl: string;
@@ -155,23 +152,4 @@ async function generateUniqueShortCode(): Promise<string> {
    } while (!isUnique);
 
    return shortCode;
-}
-
-function generateShortCode(): string {
-   let result = "";
-   for (let i = 0; i < CODE_LENGTH; i++) {
-      result += CHARACTERS.charAt(
-         Math.floor(Math.random() * CHARACTERS.length)
-      );
-   }
-   return result;
-}
-
-function isValidUrl(url: string): boolean {
-   try {
-      new URL(url);
-      return true;
-   } catch {
-      return false;
-   }
 }

@@ -10,7 +10,7 @@ import {
    CardTitle,
 } from "@/components/ui/card";
 import { GithubIcon } from "@/components/icons/github-icon";
-import ShorItButton from "@/components/common/shorItButton";
+import ShorItButton from "@/components/links/shorItButton";
 
 export default function LoginPage() {
    const handleGitHubSignIn = () => {

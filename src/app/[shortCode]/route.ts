@@ -1,5 +1,8 @@
-import { getIpInfo } from "@/services/ipService";
-import { getUrlByShortCode, recordUrlAccess } from "@/services/urlShortener";
+import { getIpInfo } from "@/server/services/ipService";
+import {
+   getUrlByShortCode,
+   recordUrlAccess,
+} from "@/server/services/urlShortener";
 import { NextRequest, NextResponse } from "next/server";
 import { UAParser } from "ua-parser-js";
 

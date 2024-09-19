@@ -1,5 +1,5 @@
+import Header from "@/components/home/header";
 import type { Metadata } from "next";
-import Header from "./components/header";
 
 export const metadata: Metadata = {
    icons: "/short-it.svg",

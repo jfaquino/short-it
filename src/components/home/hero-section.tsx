@@ -1,6 +1,6 @@
 import { Scissors, BarChart2, Link as LinkIcon } from "lucide-react";
 import UrlShortener from "./url-shortener";
-import GooBackground from "@/components/common/goo-background";
+import GooBackground from "@/components/layout/goo-background";
 
 export default function HeroSection() {
    return (

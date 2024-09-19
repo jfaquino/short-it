@@ -5,9 +5,9 @@ import Link from "next/link";
 //   SheetTrigger,
 // } from "@/components/ui/sheet"
 import Image from "next/image";
-import { auth } from "@/services/auth";
-import AuthButton from "@/components/common/authButton";
-import ShorItButton from "@/components/common/shorItButton";
+import { auth } from "@/server/services/auth";
+import ShorItButton from "@/components/links/shorItButton";
+import AuthButton from "@/components/auth/authButton";
 
 export default async function Header() {
    // const [isOpen, setIsOpen] = useState(false);
