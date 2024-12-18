@@ -4,18 +4,17 @@ import {
    recordUrlAccess,
 } from "@/server/services/urlShortener";
 import { NextRequest, NextResponse } from "next/server";
+import { ipAddress as ipAddress1 } from "@vercel/functions";
 import { UAParser } from "ua-parser-js";
 
-export async function GET(
-   request: NextRequest,
-   { params }: { params: { shortCode: string } }
-) {
+export async function GET(request: NextRequest, props: { params: Promise<{ shortCode: string }> }) {
+   const params = await props.params;
    const { shortCode } = params;
 
    try {
       const urlData = await getUrlByShortCode(shortCode);
       const ipAddress =
-         request.ip || request.headers.get("x-forwarded-for") || null;
+         ipAddress1(request) || request.headers.get("x-forwarded-for") || null;
       const referrer =
          request.referrer || request.headers.get("referer") || null;
       const userAgent = request.headers.get("user-agent") || null;
