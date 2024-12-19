@@ -89,6 +89,7 @@ export default function UrlShortener() {
 
          <TooltipProvider>
             <div
+               aria-hidden={!shortenedUrl}
                className={cn(
                   "transition-all duration-500 ease-out transform  opacity-100 translate-y-0 starting:block  starting:opacity-0 starting:translate-y-10 ",
                   shortenedUrl ?? "hidden"
@@ -154,7 +155,7 @@ export default function UrlShortener() {
                               <TooltipTrigger asChild>
                                  <Button variant="outline" size="icon" asChild>
                                     <a
-                                       href={shortenedUrl}
+                                       href={shortenedUrl ?? "#"}
                                        target="_blank"
                                        rel="noopener noreferrer"
                                     >
