@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/server/services/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +16,10 @@ export default async function RootLayout({
 }: Readonly<{
    children: React.ReactNode;
 }>) {
-   const session = await auth();
-
    return (
       <html lang="en">
          <body className={inter.className}>
-            <SessionProvider session={session}>
-               <div className="min-h-screen max-w-full  ">{children}</div>
-            </SessionProvider>
+            <div className="min-h-screen max-w-full  ">{children}</div>
          </body>
       </html>
    );
