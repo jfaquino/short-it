@@ -2,7 +2,7 @@ import HeroSection from "@/components/home/hero-section";
 
 export default function Home() {
    return (
-      <main>
+      <main className="absolute top-0 left-0 w-full">
          <HeroSection />
       </main>
    );
