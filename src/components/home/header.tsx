@@ -1,10 +1,8 @@
-import Link from "next/link";
 // import {
 //   Sheet,
 //   SheetContent,
 //   SheetTrigger,
 // } from "@/components/ui/sheet"
-import Image from "next/image";
 import { auth } from "@/server/services/auth";
 import ShorItButton from "@/components/links/shorItButton";
 import AuthButton from "@/components/auth/authButton";
@@ -13,12 +11,12 @@ export default async function Header() {
    // const [isOpen, setIsOpen] = useState(false);
    const session = await auth();
 
-   const navItems = [
-      { name: "Features", href: "/features" },
-      { name: "Pricing", href: "/pricing" },
-      { name: "API", href: "/api" },
-      { name: "Blog", href: "/blog" },
-   ];
+   //  const navItems = [
+   //     { name: "Features", href: "/features" },
+   //     { name: "Pricing", href: "/pricing" },
+   //     { name: "API", href: "/api" },
+   //     { name: "Blog", href: "/blog" },
+   //  ];
 
    return (
       <header className="w-full sticky top-0 pb-4 z-10">

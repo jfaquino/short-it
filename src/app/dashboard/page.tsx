@@ -13,7 +13,6 @@ import { formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
 import { Copy, ExternalLink, Plus, Trash } from "lucide-react";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {

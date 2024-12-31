@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 export function aggregateOneToMany<
    TRow extends Record<string, any>,
    TOne extends keyof TRow,
