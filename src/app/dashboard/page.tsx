@@ -126,7 +126,7 @@ export default async function Dashboard() {
                                        size="icon"
                                        asChild
                                     >
-                                       <Link
+                                       <a
                                           href={
                                              generateShortUrl(item.shortCode)
                                                 .url
@@ -134,7 +134,7 @@ export default async function Dashboard() {
                                           target="_blank"
                                        >
                                           <ExternalLink className="h-4 w-4" />
-                                       </Link>
+                                       </a>
                                     </Button>
                                     <Button variant="outline" size="icon">
                                        <Copy className="h-4 w-4" />
