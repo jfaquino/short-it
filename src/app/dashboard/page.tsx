@@ -9,16 +9,27 @@ import {
    TableHeader,
    TableRow,
 } from "@/components/ui/table";
-import { auth } from "@/services/auth";
+import { formatNumber, generateShortUrl } from "@/lib/utils";
+import { auth } from "@/server/services/auth";
+import { getUrlByUser } from "@/server/services/urlShortener";
 import { Copy, ExternalLink, Plus, Trash } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
    const session = await auth();
    if (!session) return redirect("/login");
 
+   const data = session.user?.id && (await getUrlByUser(session.user?.id));
+
+   const totalUrlCount = data?.length ?? 0;
+   const totalClicks = data
+      ? (data?.map((item) => item.urlStats ?? []) ?? []).flat().length
+      : 0;
+   const avgClicks = totalClicks / totalUrlCount || 0;
+
    return (
-      <main className="flex-1 p-8 mt-12 overflow-y-auto">
+      <main className="flex-1 p-8 overflow-y-auto">
          <div className="max-w-4xl mx-auto">
             <div className="flex justify-between items-center mb-8">
                <h2 className="text-3xl font-bold dark:text-white">Dashboard</h2>
@@ -36,7 +47,11 @@ export default async function Dashboard() {
                      </CardTitle>
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">1,234</div>
+                     <div className="text-2xl font-bold">
+                        {formatNumber(totalUrlCount, {
+                           notation: "compact",
+                        })}
+                     </div>
                   </CardContent>
                </Card>
                <Card>
@@ -46,7 +61,11 @@ export default async function Dashboard() {
                      </CardTitle>
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">287,654</div>
+                     <div className="text-2xl font-bold">
+                        {formatNumber(totalClicks, {
+                           notation: "compact",
+                        })}
+                     </div>
                   </CardContent>
                </Card>
                <Card>
@@ -56,7 +75,11 @@ export default async function Dashboard() {
                      </CardTitle>
                   </CardHeader>
                   <CardContent>
-                     <div className="text-2xl font-bold">233</div>
+                     <div className="text-2xl font-bold">
+                        {formatNumber(avgClicks, {
+                           notation: "compact",
+                        })}
+                     </div>
                   </CardContent>
                </Card>
             </div>
@@ -82,46 +105,47 @@ export default async function Dashboard() {
                      </TableRow>
                   </TableHeader>
                   <TableBody>
-                     <TableRow>
-                        <TableCell>short.url/abc123</TableCell>
-                        <TableCell className="max-w-xs truncate">
-                           https://www.example.com/very-long-url-that-needs-shortening
-                        </TableCell>
-                        <TableCell>1,234</TableCell>
-                        <TableCell>
-                           <div className="flex space-x-2">
-                              <Button variant="outline" size="icon">
-                                 <ExternalLink className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Copy className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Trash className="h-4 w-4" />
-                              </Button>
-                           </div>
-                        </TableCell>
-                     </TableRow>
-                     <TableRow>
-                        <TableCell>short.url/def456</TableCell>
-                        <TableCell className="max-w-xs truncate">
-                           https://www.anotherexample.com/another-long-url-to-be-shortened
-                        </TableCell>
-                        <TableCell>5,678</TableCell>
-                        <TableCell>
-                           <div className="flex space-x-2">
-                              <Button variant="outline" size="icon">
-                                 <ExternalLink className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Copy className="h-4 w-4" />
-                              </Button>
-                              <Button variant="outline" size="icon">
-                                 <Trash className="h-4 w-4" />
-                              </Button>
-                           </div>
-                        </TableCell>
-                     </TableRow>
+                     {data &&
+                        data.map((item) => (
+                           <TableRow key={item.id}>
+                              <TableCell>
+                                 {generateShortUrl(item.shortCode).label}
+                              </TableCell>
+                              <TableCell className="max-w-xs truncate">
+                                 {item.originalUrl}
+                              </TableCell>
+                              <TableCell>
+                                 {formatNumber(item.urlStats.length ?? 0, {
+                                    notation: "compact",
+                                 })}
+                              </TableCell>
+                              <TableCell>
+                                 <div className="flex space-x-2">
+                                    <Button
+                                       variant="outline"
+                                       size="icon"
+                                       asChild
+                                    >
+                                       <Link
+                                          href={
+                                             generateShortUrl(item.shortCode)
+                                                .url
+                                          }
+                                          target="_blank"
+                                       >
+                                          <ExternalLink className="h-4 w-4" />
+                                       </Link>
+                                    </Button>
+                                    <Button variant="outline" size="icon">
+                                       <Copy className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="outline" size="icon">
+                                       <Trash className="h-4 w-4" />
+                                    </Button>
+                                 </div>
+                              </TableCell>
+                           </TableRow>
+                        ))}
                   </TableBody>
                </Table>
             </div>

@@ -1,8 +1,11 @@
 import { Scissors, BarChart2, Link as LinkIcon } from "lucide-react";
 import UrlShortener from "./url-shortener";
-import GooBackground from "@/components/common/goo-background";
+import GooBackground from "@/components/layout/goo-background";
+import { auth } from "@/server/services/auth";
 
-export default function HeroSection() {
+export default async function HeroSection() {
+   const session = await auth();
+
    return (
       <section className="relative w-full min-h-screen bg-gradient-to-br from-gray-900 via-purple-950 to-indigo-900  ">
          {/* <!-- Background animation --/> */}
@@ -25,7 +28,7 @@ export default function HeroSection() {
                   </p>
                </div>
 
-               <UrlShortener />
+               <UrlShortener user={session?.user} />
 
                <div className="mt-12 flex flex-wrap justify-center gap-6">
                   <div className="flex items-center space-x-2 text-gray-300">

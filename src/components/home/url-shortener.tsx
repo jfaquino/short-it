@@ -11,11 +11,10 @@ import {
    TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { QrCode, Copy, ExternalLink } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import { User } from "next-auth";
 
-export default function UrlShortener() {
-   const { data: session } = useSession();
+export default function UrlShortener({ user }: { user: User | undefined }) {
    const [loading, setLoading] = useState(false);
    const [shortenedUrl, setShortenedUrl] = useState<string | undefined>();
 
@@ -33,7 +32,7 @@ export default function UrlShortener() {
 
       const formData = new FormData(e.currentTarget);
       const originalUrl = formData.get("original-url");
-      const userId = session?.user?.id || undefined;
+      const userId = user?.id || undefined;
 
       const options: RequestInit = {
          method: "POST",
@@ -89,6 +88,7 @@ export default function UrlShortener() {
 
          <TooltipProvider>
             <div
+               aria-hidden={!shortenedUrl}
                className={cn(
                   "transition-all duration-500 ease-out transform  opacity-100 translate-y-0 starting:block  starting:opacity-0 starting:translate-y-10 ",
                   shortenedUrl ?? "hidden"
@@ -154,7 +154,7 @@ export default function UrlShortener() {
                               <TooltipTrigger asChild>
                                  <Button variant="outline" size="icon" asChild>
                                     <a
-                                       href={shortenedUrl}
+                                       href={shortenedUrl ?? "#"}
                                        target="_blank"
                                        rel="noopener noreferrer"
                                     >

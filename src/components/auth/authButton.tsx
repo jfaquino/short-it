@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
+import Link from "next/link";
 
 interface AuthButtonProps {
    session: Session | null;
@@ -46,9 +47,15 @@ export default function AuthButton({ session }: AuthButtonProps) {
                      <span className="text-sm">{session.user?.name}</span>
                   </div>
                   <hr />
-                  <Button variant="ghost" onClick={() => signOut()}>
-                     Sign out
-                  </Button>
+                  <div className="flex flex-col gap-2 mt-2">
+                     <Button asChild>
+                        <Link href="/dashboard">Dashboard</Link>
+                     </Button>
+
+                     <Button variant="ghost" onClick={() => signOut()}>
+                        Sign out
+                     </Button>
+                  </div>
                </PopoverContent>
             </Popover>
          </div>

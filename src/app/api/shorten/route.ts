@@ -1,5 +1,5 @@
 import { urls } from "@/db/schema/urls";
-import { createShortUrl } from "@/services/urlShortener";
+import { createShortUrl } from "@/server/services/urlShortener";
 import { createInsertSchema } from "drizzle-zod";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";

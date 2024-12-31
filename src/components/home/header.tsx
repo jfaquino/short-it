@@ -5,9 +5,9 @@ import Link from "next/link";
 //   SheetTrigger,
 // } from "@/components/ui/sheet"
 import Image from "next/image";
-import { auth } from "@/services/auth";
-import AuthButton from "@/components/common/authButton";
-import ShorItButton from "@/components/common/shorItButton";
+import { auth } from "@/server/services/auth";
+import ShorItButton from "@/components/links/shorItButton";
+import AuthButton from "@/components/auth/authButton";
 
 export default async function Header() {
    // const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ export default async function Header() {
    ];
 
    return (
-      <header className="w-full absolute top-0 bg-gradient-to-b from-gray-900 to-transparent text-white pb-4 z-10">
+      <header className="w-full sticky top-0 pb-4 z-10">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
                <div>
