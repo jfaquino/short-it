@@ -11,16 +11,21 @@ import {
 import { Session } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface AuthButtonProps {
    session: Session | null;
 }
 
 export default function AuthButton({ session }: AuthButtonProps) {
+   const [open, setOpen] = useState(false);
+
+   const toggleOpen = () => setOpen((prev) => !prev);
+
    if (session) {
       return (
          <div className="flex items-center gap-4 ">
-            <Popover>
+            <Popover open={open} onOpenChange={toggleOpen}>
                <PopoverTrigger asChild>
                   <Button
                      variant="ghost"
@@ -48,7 +53,11 @@ export default function AuthButton({ session }: AuthButtonProps) {
                   </div>
                   <hr />
                   <div className="flex flex-col gap-2 mt-2">
-                     <Button asChild>
+                     <Button asChild variant="secondary" onClick={toggleOpen}>
+                        <Link href="/">Home</Link>
+                     </Button>
+
+                     <Button asChild onClick={toggleOpen}>
                         <Link href="/dashboard">Dashboard</Link>
                      </Button>
 
