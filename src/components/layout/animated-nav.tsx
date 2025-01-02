@@ -1,0 +1,85 @@
+"use client";
+import React, { useEffect, useRef } from "react";
+import ShorItButton from "../links/shorItButton";
+import AuthButton from "../auth/authButton";
+import { Session } from "next-auth";
+
+interface AnimatedNavProps {
+   session: Session | null;
+   className?: string;
+}
+
+const AnimatedNav: React.FC<AnimatedNavProps> = ({
+   session,
+   className = "",
+}) => {
+   const navRef = useRef<HTMLElement | null>(null);
+
+   useEffect(() => {
+      if (!navRef.current) return;
+
+      const handleScroll = () => {
+         const scrolled = window.scrollY > 0;
+         if (scrolled) {
+            navRef.current?.classList.add(
+               "rounded-lg",
+               "shadow-lg",
+               "ring-1",
+               "backdrop-blur",
+               "ring-white/10",
+               "transition-all",
+               "duration-300"
+            );
+            // Check dark mode preference
+            if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+               navRef.current?.classList.add("bg-black/5");
+               navRef.current?.classList.remove("bg-white/20");
+            } else {
+               navRef.current?.classList.add("bg-white/20");
+               navRef.current?.classList.remove("bg-black/5");
+            }
+         } else {
+            navRef.current?.classList.remove(
+               "rounded-lg",
+               "shadow-lg",
+               "ring-1",
+               "backdrop-blur",
+               "ring-white/10",
+               "bg-black/5",
+               "bg-white/20"
+            );
+         }
+      };
+
+      // Initial check
+      handleScroll();
+
+      // Add scroll event listener
+      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      // Handle dark mode changes
+      const darkModeMediaQuery = window.matchMedia(
+         "(prefers-color-scheme: dark)"
+      );
+      const handleDarkModeChange = () => handleScroll();
+      darkModeMediaQuery.addEventListener("change", handleDarkModeChange);
+
+      // Cleanup
+      return () => {
+         window.removeEventListener("scroll", handleScroll);
+         darkModeMediaQuery.removeEventListener("change", handleDarkModeChange);
+      };
+   }, []);
+
+   return (
+      <nav ref={navRef} className={`transition-all duration-300 ${className}`}>
+         <div>
+            <ShorItButton />
+         </div>
+
+         <AuthButton session={session} />
+      </nav>
+   );
+};
+
+export default AnimatedNav;
