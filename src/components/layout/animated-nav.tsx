@@ -3,6 +3,18 @@ import React, { useEffect, useRef } from "react";
 import ShorItButton from "../links/shorItButton";
 import AuthButton from "../auth/authButton";
 import { Session } from "next-auth";
+import dynamic from "next/dynamic";
+import { Skeleton } from "../ui/skeleton";
+
+const ThemeToggler = dynamic(
+   () => import("../theme-toggler").then((mod) => mod.ThemeToggler),
+   {
+      ssr: false,
+      loading: () => (
+         <Skeleton className="size-10 dark:bg-white/10 backdrop-blur-sm" />
+      ),
+   }
+);
 
 interface AnimatedNavProps {
    session: Session | null;
@@ -77,7 +89,11 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({
             <ShorItButton />
          </div>
 
-         <AuthButton session={session} />
+         <div className="flex items-center gap-4">
+            <ThemeToggler />
+
+            <AuthButton session={session} />
+         </div>
       </nav>
    );
 };
