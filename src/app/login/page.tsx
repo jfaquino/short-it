@@ -16,8 +16,8 @@ export default async function LoginPage() {
    if (session) return redirect("/dashboard");
 
    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100 px-2">
-         <Card className="w-full max-w-[350px] ">
+      <div className="flex items-center justify-center px-2 mt-10">
+         <Card className="w-full max-w-[350px] shadow-lg dark:shadow-none ">
             <CardHeader>
                <div className="flex justify-center pb-8">
                   <ShorItButton />
