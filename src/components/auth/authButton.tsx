@@ -1,32 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
 
-import { GithubIcon } from "@/components/icons/github-icon";
 import { Button } from "@/components/ui/button";
 import {
-   Popover,
-   PopoverContent,
-   PopoverTrigger,
-} from "@/components/ui/popover";
+   ArrowRightIcon,
+   HouseIcon,
+   LayoutDashboardIcon,
+   LogOutIcon,
+} from "lucide-react";
 import { Session } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import {
+   DropdownMenu,
+   DropdownMenuContent,
+   DropdownMenuItem,
+   DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 interface AuthButtonProps {
    session: Session | null;
 }
 
 export default function AuthButton({ session }: AuthButtonProps) {
-   const [open, setOpen] = useState(false);
-
-   const toggleOpen = () => setOpen((prev) => !prev);
-
    if (session) {
       return (
          <div className="flex items-center gap-4 ">
-            <Popover open={open} onOpenChange={toggleOpen}>
-               <PopoverTrigger asChild>
+            <DropdownMenu>
+               <DropdownMenuTrigger asChild>
                   <Button
                      variant="ghost"
                      className="hover:bg-slate-400/15 px-2"
@@ -39,49 +39,53 @@ export default function AuthButton({ session }: AuthButtonProps) {
                         />
                      )}
                   </Button>
-               </PopoverTrigger>
-               <PopoverContent side="bottom" align="end">
-                  <div className="flex items-center gap-2 mb-5 ">
-                     {session.user?.image && (
-                        <img
-                           className="w-10 h-10 rounded-full "
-                           src={session.user.image}
-                           alt={`User profile of ${session.user?.name}`}
-                        />
-                     )}
+               </DropdownMenuTrigger>
+               <DropdownMenuContent align="end">
+                  <div className="flex flex-col gap-1 p-2 ">
                      <span className="text-sm">{session.user?.name}</span>
+                     <span className="text-sm opacity-70">
+                        {session.user?.email}
+                     </span>
                   </div>
-                  <hr />
-                  <div className="flex flex-col gap-2 mt-2">
-                     <Button asChild variant="secondary" onClick={toggleOpen}>
-                        <Link href="/">Home</Link>
-                     </Button>
 
-                     <Button asChild onClick={toggleOpen}>
-                        <Link href="/dashboard">Dashboard</Link>
-                     </Button>
+                  <hr className="mb-1" />
 
-                     <Button variant="ghost" onClick={() => signOut()}>
-                        Sign out
-                     </Button>
-                  </div>
-               </PopoverContent>
-            </Popover>
+                  <DropdownMenuItem className="flex items-center gap-3" asChild>
+                     <Link href="/" className="flex items-center gap-2">
+                        <HouseIcon className="size-4" />
+                        <span>Home</span>
+                     </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="flex items-center gap-3" asChild>
+                     <Link
+                        href="/dashboard"
+                        className="flex items-center gap-2"
+                     >
+                        <LayoutDashboardIcon className="size-4" />{" "}
+                        <span>Dashboard</span>
+                     </Link>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem
+                     className="flex items-center gap-3"
+                     onClick={() => signOut()}
+                  >
+                     <LogOutIcon className="size-4" />
+                     <span>Sign out</span>
+                  </DropdownMenuItem>
+               </DropdownMenuContent>
+            </DropdownMenu>
          </div>
       );
    }
 
    return (
-      <div className="flex items-center space-x-4">
-         <Button
-            variant="outline"
-            size="sm"
-            className="bg-white text-black hover:bg-white/85 border-gray-300 px-3 py-1 text-xs font-semibold transition-colors duration-300 ease-in-out "
-            onClick={() => signIn("github")}
-         >
-            <GithubIcon className="mr-1.5 h-5 w-5" />
-            Sign up
-         </Button>
-      </div>
+      <Button variant="ghost" size="sm" asChild>
+         <Link className="flex items-center gap-2" href={"/dashboard"}>
+            <span>Get Started</span>
+            <ArrowRightIcon className="size-4" />
+         </Link>
+      </Button>
    );
 }
