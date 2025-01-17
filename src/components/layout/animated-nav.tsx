@@ -1,10 +1,14 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+
+import { useEffect, useRef } from "react";
 import ShorItButton from "../links/shorItButton";
 import AuthButton from "../auth/authButton";
 import { Session } from "next-auth";
 import dynamic from "next/dynamic";
 import { Skeleton } from "../ui/skeleton";
+import { Button } from "../ui/button";
+import { GithubIcon } from "../icons/github-icon";
+import { GITHUB_URL } from "@/lib/constants";
 
 const ThemeToggler = dynamic(
    () => import("../theme-toggler").then((mod) => mod.ThemeToggler),
@@ -89,7 +93,13 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({
             <ShorItButton />
          </div>
 
-         <div className="flex items-center gap-4">
+         <div className="flex items-center gap-1">
+            <Button variant="ghost" size="icon" asChild>
+               <a href={GITHUB_URL} target="_blank">
+                  <GithubIcon className="size-5" />
+               </a>
+            </Button>
+
             <ThemeToggler />
 
             <AuthButton session={session} />

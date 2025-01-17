@@ -3,3 +3,5 @@ export const SHORT_CODE_CHARACTERS =
 export const SHORT_CODE_LENGTH = 6;
 
 export const HOST_URL = process.env.HOST_URL;
+
+export const GITHUB_URL = "https://github.com/jfaquino/short-it";

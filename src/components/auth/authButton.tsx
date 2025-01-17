@@ -27,13 +27,10 @@ export default function AuthButton({ session }: AuthButtonProps) {
          <div className="flex items-center gap-4 ">
             <DropdownMenu>
                <DropdownMenuTrigger asChild>
-                  <Button
-                     variant="ghost"
-                     className="hover:bg-slate-400/15 px-2"
-                  >
+                  <Button variant="ghost" size="icon">
                      {session.user?.image && (
                         <img
-                           className="w-8 h-8 rounded-full"
+                           className="size-7 rounded-full"
                            src={session.user.image}
                            alt={`User profile of ${session.user?.name}`}
                         />
