@@ -3,7 +3,7 @@ import { urls } from "@/db/schema/urls";
 import { urlStats } from "@/db/schema/urlStats";
 import { users } from "@/db/schema/users";
 import { generateShortCode, isValidUrl } from "@/lib/utils";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -133,6 +133,7 @@ export async function getUrlByUser(userId: string) {
    const urlList = await db.query.urls.findMany({
       with: { urlStats: true },
       where: eq(urls.userId, userId),
+      orderBy: desc(urls.createdAt),
    });
 
    return getUrlResponse.parse(urlList);

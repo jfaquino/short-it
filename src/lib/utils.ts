@@ -27,6 +27,22 @@ export function formatNumber(
    }).format(Number(number));
 }
 
+type DateFormatOptions = {
+   locale?: Intl.LocalesArgument;
+   options?: Intl.DateTimeFormatOptions; // Custom formatting options
+};
+
+export const formatDate = (
+   date: Date,
+   {
+      locale = "en-US",
+      options = { day: "2-digit", month: "long", year: "numeric" },
+   }: DateFormatOptions = {}
+): string => {
+   const formatter = new Intl.DateTimeFormat(locale, options);
+   return formatter.format(date);
+};
+
 export function generateShortCode(): string {
    let result = "";
    for (let i = 0; i < SHORT_CODE_LENGTH; i++) {

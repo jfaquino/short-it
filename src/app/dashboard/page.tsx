@@ -1,18 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
-   Table,
-   TableBody,
-   TableCell,
-   TableHead,
-   TableHeader,
-   TableRow,
-} from "@/components/ui/table";
-import { formatNumber, generateShortUrl } from "@/lib/utils";
+   Card,
+   CardContent,
+   CardFooter,
+   CardHeader,
+   CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
-import { Copy, ExternalLink, Plus, Trash } from "lucide-react";
+import { Copy, ExternalLink, EyeIcon, Plus, Trash } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
@@ -32,9 +30,6 @@ export default async function Dashboard() {
          <div className="max-w-4xl mx-auto">
             <div className="flex justify-between items-center mb-8">
                <h2 className="text-3xl font-bold dark:text-white">Dashboard</h2>
-               {/* <Button variant="outline" size="icon" onClick={toggleDarkMode}>
-           {darkMode ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
-         </Button> */}
             </div>
 
             {/* Stats overview */}
@@ -84,7 +79,7 @@ export default async function Dashboard() {
             </div>
 
             {/* URL Management */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
+            <div className="bg-white dark:bg-gray-800/40 rounded-lg shadow p-6 mb-8">
                <h3 className="text-xl font-semibold mb-4 dark:text-white">
                   Manage URLs
                </h3>
@@ -94,59 +89,81 @@ export default async function Dashboard() {
                      <Plus className="mr-2 h-4 w-4" /> Shorten
                   </Button>
                </div>
-               <Table>
-                  <TableHeader>
-                     <TableRow>
-                        <TableHead>Short URL</TableHead>
-                        <TableHead>Original URL</TableHead>
-                        <TableHead>Clicks</TableHead>
-                        <TableHead>Actions</TableHead>
-                     </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                     {data &&
-                        data.map((item) => (
-                           <TableRow key={item.id}>
-                              <TableCell>
-                                 {generateShortUrl(item.shortCode).label}
-                              </TableCell>
-                              <TableCell className="max-w-xs truncate">
-                                 {item.originalUrl}
-                              </TableCell>
-                              <TableCell>
-                                 {formatNumber(item.urlStats.length ?? 0, {
-                                    notation: "compact",
-                                 })}
-                              </TableCell>
-                              <TableCell>
-                                 <div className="flex space-x-2">
-                                    <Button
-                                       variant="outline"
-                                       size="icon"
-                                       asChild
+
+               <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+                  {data &&
+                     data.map((item) => (
+                        <Card key={item.shortCode}>
+                           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-lg font-medium ">
+                                 {`/${item.shortCode}`}
+                              </CardTitle>
+                              <div className="flex space-x-2">
+                                 <Button
+                                    variant="outline"
+                                    className="size-8"
+                                    size="icon"
+                                    asChild
+                                 >
+                                    <a
+                                       href={
+                                          generateShortUrl(item.shortCode).url
+                                       }
+                                       target="_blank"
                                     >
-                                       <a
-                                          href={
-                                             generateShortUrl(item.shortCode)
-                                                .url
-                                          }
-                                          target="_blank"
-                                       >
-                                          <ExternalLink className="h-4 w-4" />
-                                       </a>
-                                    </Button>
-                                    <Button variant="outline" size="icon">
-                                       <Copy className="h-4 w-4" />
-                                    </Button>
-                                    <Button variant="outline" size="icon">
-                                       <Trash className="h-4 w-4" />
-                                    </Button>
-                                 </div>
-                              </TableCell>
-                           </TableRow>
-                        ))}
-                  </TableBody>
-               </Table>
+                                       <ExternalLink className="size-4" />
+                                    </a>
+                                 </Button>
+                                 <Button
+                                    variant="outline"
+                                    className="size-8"
+                                    size="icon"
+                                 >
+                                    <Copy className="size-4" />
+                                 </Button>
+                                 <Button
+                                    variant="outline"
+                                    className="size-8"
+                                    size="icon"
+                                 >
+                                    <Trash className="size-4" />
+                                 </Button>
+                              </div>
+                           </CardHeader>
+
+                           <CardContent className="overflow-hidden truncate text-neutral-500 dark:text-neutral-400 ">
+                              <span
+                                 className="truncate select-all font-mono text-sm "
+                                 title={item.originalUrl}
+                              >
+                                 {item.originalUrl}
+                              </span>
+                           </CardContent>
+
+                           <CardFooter
+                              className="flex items-center justify-between gap-4
+                                          text-xs text-neutral-500 dark:text-neutral-400 
+                                          font-mono"
+                           >
+                              <div
+                                 className="flex items-center gap-1"
+                                 title="visits"
+                              >
+                                 <EyeIcon className="size-4" />
+                                 <span>
+                                    {formatNumber(item.urlStats.length, {
+                                       notation: "compact",
+                                    })}
+                                 </span>
+                              </div>
+
+                              <span title="Created On">
+                                 {formatDate(new Date(item.createdAt))}
+                              </span>
+                           </CardFooter>
+                        </Card>
+                     ))}
+               </div>
             </div>
          </div>
       </main>
