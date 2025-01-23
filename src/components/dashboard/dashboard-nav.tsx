@@ -30,7 +30,7 @@ export default function DashboardNav() {
                className={cn(
                   "group relative px-1 pb-4 pt-3 text-sm font-medium outline-2 outline-current transition-colors duration-100 hover:bg-transparent hover:text-neutral-900 focus-visible:outline dark:hover:text-white",
                   pathname === route.path
-                     ? "border-b border-neutral-800 dark:border-white dark:text-white"
+                     ? "border-b border-purple-400 dark:border-purple-500"
                      : "text-neutral-500"
                )}
             >
