@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input";
 import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
-import { Copy, ExternalLink, EyeIcon, Plus, Trash } from "lucide-react";
+import { ArrowUpRightIcon, Copy, EyeIcon, Plus, Trash } from "lucide-react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
@@ -75,9 +76,6 @@ export default async function Dashboard() {
 
          {/* URL Management */}
          <div className="bg-white dark:bg-gray-800/40 rounded-lg shadow p-6 mb-8">
-            <h3 className="text-xl font-semibold mb-4 dark:text-white">
-               Manage URLs
-            </h3>
             <div className="flex space-x-4 mb-4">
                <Input placeholder="Enter long URL" className="flex-grow" />
                <Button>
@@ -90,23 +88,39 @@ export default async function Dashboard() {
                   data.map((item) => (
                      <Card key={item.shortCode}>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                           <CardTitle className="text-lg font-medium ">
-                              {`/${item.shortCode}`}
-                           </CardTitle>
-                           <div className="flex space-x-2">
+                           <CardTitle className="flex items-center gap-2">
+                              <Image
+                                 src={`https://icon.horse/icon/${
+                                    new URL(item.originalUrl).hostname
+                                 }`}
+                                 className="rounded-full"
+                                 alt="link favicon"
+                                 width={40}
+                                 height={40}
+                                 unoptimized
+                              />
                               <Button
-                                 variant="outline"
-                                 className="size-8"
-                                 size="icon"
+                                 className="space-x-1 group hover:no-underline "
+                                 variant="link"
                                  asChild
                               >
-                                 <a
-                                    href={generateShortUrl(item.shortCode).url}
-                                    target="_blank"
-                                 >
-                                    <ExternalLink className="size-4" />
+                                 <a href={generateShortUrl(item.shortCode).url}>
+                                    <span className="text-xl opacity-60">
+                                       {"/"}
+                                    </span>
+
+                                    <span className="text-base font-bold tracking-wider ">
+                                       {`${item.shortCode}`}
+                                    </span>
+                                    <ArrowUpRightIcon
+                                       className="size-5 ml-3 scale-75 transition duration-300 
+                                                   group-hover:rotate-6 group-hover:scale-100"
+                                    />
                                  </a>
                               </Button>
+                           </CardTitle>
+
+                           <div className="flex space-x-2">
                               <Button
                                  variant="outline"
                                  className="size-8"
@@ -124,9 +138,9 @@ export default async function Dashboard() {
                            </div>
                         </CardHeader>
 
-                        <CardContent className="overflow-hidden truncate text-neutral-500 dark:text-neutral-400 ">
+                        <CardContent className="overflow-hidden truncate text-secondary-foreground">
                            <span
-                              className="truncate select-all font-mono text-sm "
+                              className="truncate select-all font-mono text-sm"
                               title={item.originalUrl}
                            >
                               {item.originalUrl}
@@ -135,8 +149,7 @@ export default async function Dashboard() {
 
                         <CardFooter
                            className="flex items-center justify-between gap-4
-                                          text-xs text-neutral-500 dark:text-neutral-400 
-                                          font-mono"
+                                          text-xs text-muted-foreground font-mono"
                         >
                            <div
                               className="flex items-center gap-1"
