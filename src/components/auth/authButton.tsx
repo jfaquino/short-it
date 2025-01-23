@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { Button } from "@/components/ui/button";
 import {
    ArrowRightIcon,
@@ -16,6 +14,7 @@ import {
    DropdownMenuItem,
    DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import Image from "next/image";
 
 interface AuthButtonProps {
    session: Session | null;
@@ -29,10 +28,12 @@ export default function AuthButton({ session }: AuthButtonProps) {
                <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon">
                      {session.user?.image && (
-                        <img
-                           className="size-7 rounded-full"
+                        <Image
+                           className="rounded-full"
                            src={session.user.image}
                            alt={`User profile of ${session.user?.name}`}
+                           width={28}
+                           height={28}
                         />
                      )}
                   </Button>
