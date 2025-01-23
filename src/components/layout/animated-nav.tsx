@@ -9,6 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Button } from "../ui/button";
 import { GithubIcon } from "../icons/github-icon";
 import { GITHUB_URL } from "@/lib/constants";
+import ExternalLink from "@/components/links/external-link";
 
 const ThemeToggler = dynamic(
    () => import("../theme-toggler").then((mod) => mod.ThemeToggler),
@@ -95,9 +96,9 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({
 
          <div className="flex items-center gap-1">
             <Button variant="ghost" size="icon" asChild>
-               <a href={GITHUB_URL} target="_blank">
+               <ExternalLink href={GITHUB_URL}>
                   <GithubIcon className="size-5" />
-               </a>
+               </ExternalLink>
             </Button>
 
             <ThemeToggler />

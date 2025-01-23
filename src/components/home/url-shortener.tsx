@@ -10,9 +10,10 @@ import {
    TooltipProvider,
    TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { QrCode, Copy, ExternalLink } from "lucide-react";
+import { QrCode, Copy, ExternalLinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { User } from "next-auth";
+import ExternalLink from "@/components/links/external-link";
 
 export default function UrlShortener({ user }: { user: User | undefined }) {
    const [loading, setLoading] = useState(false);
@@ -153,13 +154,9 @@ export default function UrlShortener({ user }: { user: User | undefined }) {
                            <Tooltip>
                               <TooltipTrigger asChild>
                                  <Button variant="outline" size="icon" asChild>
-                                    <a
-                                       href={shortenedUrl ?? "#"}
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                    >
-                                       <ExternalLink className="h-4 w-4" />
-                                    </a>
+                                    <ExternalLink href={shortenedUrl ?? "#"}>
+                                       <ExternalLinkIcon className="h-4 w-4" />
+                                    </ExternalLink>
                                  </Button>
                               </TooltipTrigger>
                               <TooltipContent>

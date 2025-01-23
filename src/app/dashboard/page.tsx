@@ -1,3 +1,4 @@
+import ExternalLink from "@/components/links/external-link";
 import { Button } from "@/components/ui/button";
 import {
    Card,
@@ -104,7 +105,9 @@ export default async function Dashboard() {
                                  variant="link"
                                  asChild
                               >
-                                 <a href={generateShortUrl(item.shortCode).url}>
+                                 <ExternalLink
+                                    href={generateShortUrl(item.shortCode).url}
+                                 >
                                     <span className="text-xl opacity-60">
                                        {"/"}
                                     </span>
@@ -116,7 +119,7 @@ export default async function Dashboard() {
                                        className="size-5 ml-3 scale-75 transition duration-300 
                                                    group-hover:rotate-6 group-hover:scale-100"
                                     />
-                                 </a>
+                                 </ExternalLink>
                               </Button>
                            </CardTitle>
 
