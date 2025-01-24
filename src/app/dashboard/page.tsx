@@ -8,7 +8,6 @@ import {
    CardHeader,
    CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
