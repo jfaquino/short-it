@@ -19,7 +19,7 @@ export default function SearchBar({ className }: { className?: string }) {
          } else {
             params.delete("query");
          }
-         router.replace(`${pathname}?${params.toString()}`);
+         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       },
       300
    );
