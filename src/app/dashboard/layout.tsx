@@ -1,10 +1,15 @@
 import DashboardNav from "@/components/dashboard/dashboard-nav";
+import { auth } from "@/server/services/auth";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
    children,
 }: {
    children: React.ReactNode;
 }) {
+   const session = await auth();
+   if (!session) return redirect("/login");
+
    return (
       <>
          <div className="max-w-6xl container mx-auto w-full px-4 sm:px-6 lg:px-8  ">

@@ -13,13 +13,13 @@ import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
 import { ArrowUpRightIcon, Copy, EyeIcon, Plus, Trash } from "lucide-react";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
    const session = await auth();
-   if (!session) return redirect("/login");
 
-   const data = session.user?.id && (await getUrlByUser(session.user?.id));
+   const data =
+      (session && session.user?.id && (await getUrlByUser(session.user?.id))) ??
+      [];
 
    const totalUrlCount = data?.length ?? 0;
    const totalClicks = data
