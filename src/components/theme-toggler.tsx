@@ -18,14 +18,10 @@ export function ThemeToggler() {
       <DropdownMenu>
          <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" aria-label="Toggle theme">
-               {theme === "light" && (
+               {theme === "light" ? (
                   <Sun className="size-5" strokeWidth={1.5} />
-               )}
-               {theme === "dark" && (
+               ) : (
                   <MoonIcon className="absolute size-5" strokeWidth={1.5} />
-               )}
-               {theme === "system" && (
-                  <Monitor className=" size-5" strokeWidth={1.5} />
                )}
             </Button>
          </DropdownMenuTrigger>
