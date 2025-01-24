@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 
 const DashboardRoutes = [
    {
-      title: "Links",
+      title: "Urls",
       path: "/dashboard",
       icon: LinkIcon,
    },

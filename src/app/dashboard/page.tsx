@@ -1,3 +1,4 @@
+import SearchBar from "@/components/dashboard/search-bar";
 import ExternalLink from "@/components/links/external-link";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,112 +15,133 @@ import { getUrlByUser } from "@/server/services/urlShortener";
 import { ArrowUpRightIcon, Copy, EyeIcon, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 
-export default async function Dashboard() {
+export default async function Dashboard(props: {
+   searchParams?: Promise<{
+      query?: string;
+   }>;
+}) {
    const session = await auth();
+   const searchParams = await props.searchParams;
 
    const data =
-      (session && session.user?.id && (await getUrlByUser(session.user?.id))) ??
-      [];
+      session && session.user?.id && (await getUrlByUser(session.user?.id));
+   if (!data) {
+      return <div>Error</div>;
+   }
+
+   const filteredUrlData = !searchParams?.query
+      ? data
+      : data.filter((url) => {
+           if (!searchParams?.query) return true;
+
+           const matchQuery = searchParams.query.toLowerCase();
+
+           // Filter Urls by shortCode or originalUrl
+           const matchShortCode =
+              matchQuery && url.shortCode.toLowerCase().includes(matchQuery);
+
+           const matchOriginalUrl =
+              matchQuery && url.originalUrl.toLowerCase().includes(matchQuery);
+
+           return matchShortCode || matchOriginalUrl;
+        });
 
    return (
       <>
          {/* URL Management */}
          <div className="bg-white dark:bg-gray-800/40 rounded-lg shadow p-6 mb-8">
-            <div className="flex space-x-4 mb-4">
-               <Input placeholder="Enter long URL" className="flex-grow" />
+            <header className="mb-3 flex w-full items-center space-x-2 md:justify-between">
+               <SearchBar className="w-full md:w-72 md:max-w-72" />
+
                <Button>
                   <Plus className="mr-2 h-4 w-4" /> Shorten
                </Button>
-            </div>
+            </header>
 
             <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-               {data &&
-                  data.map((item) => (
-                     <Card key={item.shortCode}>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                           <CardTitle className="flex items-center gap-2">
-                              <Image
-                                 src={`https://icon.horse/icon/${
-                                    new URL(item.originalUrl).hostname
-                                 }`}
-                                 className="rounded-full"
-                                 alt="link favicon"
-                                 width={40}
-                                 height={40}
-                                 unoptimized
-                              />
-                              <Button
-                                 className="space-x-1 group hover:no-underline "
-                                 variant="link"
-                                 asChild
+               {filteredUrlData.map((item) => (
+                  <Card key={item.shortCode}>
+                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="flex items-center gap-2">
+                           <Image
+                              src={`https://icon.horse/icon/${
+                                 new URL(item.originalUrl).hostname
+                              }`}
+                              className="rounded-full"
+                              alt="link favicon"
+                              width={40}
+                              height={40}
+                              unoptimized
+                           />
+                           <Button
+                              className="space-x-1 group hover:no-underline "
+                              variant="link"
+                              asChild
+                           >
+                              <ExternalLink
+                                 href={generateShortUrl(item.shortCode).url}
                               >
-                                 <ExternalLink
-                                    href={generateShortUrl(item.shortCode).url}
-                                 >
-                                    <span className="text-xl opacity-60">
-                                       {"/"}
-                                    </span>
+                                 <span className="text-xl opacity-60">
+                                    {"/"}
+                                 </span>
 
-                                    <span className="text-base font-bold tracking-wider ">
-                                       {`${item.shortCode}`}
-                                    </span>
-                                    <ArrowUpRightIcon
-                                       className="size-5 ml-3 scale-75 transition duration-300 
+                                 <span className="text-base font-bold tracking-wider ">
+                                    {`${item.shortCode}`}
+                                 </span>
+                                 <ArrowUpRightIcon
+                                    className="size-5 ml-3 scale-75 transition duration-300 
                                                    group-hover:rotate-6 group-hover:scale-100"
-                                    />
-                                 </ExternalLink>
-                              </Button>
-                           </CardTitle>
+                                 />
+                              </ExternalLink>
+                           </Button>
+                        </CardTitle>
 
-                           <div className="flex space-x-2">
-                              <Button
-                                 variant="outline"
-                                 className="size-8"
-                                 size="icon"
-                              >
-                                 <Copy className="size-4" />
-                              </Button>
-                              <Button
-                                 variant="outline"
-                                 className="size-8"
-                                 size="icon"
-                              >
-                                 <Trash className="size-4" />
-                              </Button>
-                           </div>
-                        </CardHeader>
-
-                        <CardContent className="overflow-hidden truncate text-secondary-foreground">
-                           <span
-                              className="truncate select-all font-mono text-sm"
-                              title={item.originalUrl}
+                        <div className="flex space-x-2">
+                           <Button
+                              variant="outline"
+                              className="size-8"
+                              size="icon"
                            >
-                              {item.originalUrl}
-                           </span>
-                        </CardContent>
+                              <Copy className="size-4" />
+                           </Button>
+                           <Button
+                              variant="outline"
+                              className="size-8"
+                              size="icon"
+                           >
+                              <Trash className="size-4" />
+                           </Button>
+                        </div>
+                     </CardHeader>
 
-                        <CardFooter
-                           className="flex items-center justify-between gap-4
-                                          text-xs text-muted-foreground font-mono"
+                     <CardContent className="overflow-hidden truncate text-secondary-foreground">
+                        <span
+                           className="truncate select-all font-mono text-sm"
+                           title={item.originalUrl}
                         >
-                           <div
-                              className="flex items-center gap-1"
-                              title="visits"
-                           >
-                              <EyeIcon className="size-4" />
-                              <span>
-                                 {formatNumber(item.urlStats.length, {
-                                    notation: "compact",
-                                 })}
-                              </span>
-                           </div>
+                           {item.originalUrl}
+                        </span>
+                     </CardContent>
 
-                           <span title="Created On">
-                              {formatDate(new Date(item.createdAt))}
+                     <CardFooter
+                        className="flex items-center justify-between gap-4
+                                          text-xs text-muted-foreground font-mono"
+                     >
+                        <div className="flex items-center gap-1" title="visits">
+                           <EyeIcon className="size-4" />
+                           <span>
+                              {formatNumber(item.urlStats.length, {
+                                 notation: "compact",
+                              })}
                            </span>
-                        </CardFooter>
-                     </Card>
-                  ))}
+                        </div>
+
+                        <span title="Created On">
+                           {formatDate(new Date(item.createdAt))}
+                        </span>
+                     </CardFooter>
+                  </Card>
+               ))}
             </div>
          </div>
       </>
