@@ -1,7 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { LinkIcon, SettingsIcon } from "lucide-react";
+import {
+   ChartColumnIncreasingIcon,
+   LinkIcon,
+   SettingsIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,6 +14,11 @@ const DashboardRoutes = [
       title: "Links",
       path: "/dashboard",
       icon: LinkIcon,
+   },
+   {
+      title: "Analytics",
+      path: "/dashboard/analytics",
+      icon: ChartColumnIncreasingIcon,
    },
    {
       title: "Settings",
