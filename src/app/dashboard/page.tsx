@@ -1,3 +1,4 @@
+import AddUrlForm from "@/components/dashboard/add-url-form";
 import SearchBar from "@/components/dashboard/search-bar";
 import ExternalLink from "@/components/links/external-link";
 import { Button } from "@/components/ui/button";
@@ -52,9 +53,7 @@ export default async function Dashboard(props: {
             <header className="mb-3 flex w-full items-center space-x-2 md:justify-between">
                <SearchBar className="w-full md:w-72 md:max-w-72" />
 
-               <Button>
-                  <Plus className="mr-2 h-4 w-4" /> Shorten
-               </Button>
+               {session?.user?.id && <AddUrlForm userId={session.user?.id} />}
             </header>
 
             <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
