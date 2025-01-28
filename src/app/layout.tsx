@@ -32,6 +32,8 @@ export default async function RootLayout({
                   <Header />
                   {children}
                </div>
+
+               <ToasterProvider />
             </ThemeProvider>
          </body>
       </html>
