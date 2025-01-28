@@ -65,14 +65,32 @@ export function isValidUrl(url: string): boolean {
 export const generateShortUrl = (
    shortCode: string
 ): { label: string; url: string } => {
-   const host = HOST_URL;
-   if (!host || !shortCode) return { label: "", url: "" };
+   if (!shortCode?.trim()) {
+      throw new Error("Short code is required and cannot be empty");
+   }
+
+   let host = HOST_URL;
+
+   if (!host && typeof window !== "undefined") {
+      host = window.location.origin;
+   }
+
+   if (!host) {
+      throw new Error("Failed to generate short URL: Host URL is required");
+   }
 
    try {
-      const url = new URL(shortCode, host);
-      return { label: `${url.host}${url.pathname}`, url: url.toString() };
+      const sanitizedCode = encodeURIComponent(shortCode.trim());
+      const url = new URL(sanitizedCode, host);
+
+      return {
+         label: `${url.host}${url.pathname}`,
+         url: url.toString(),
+      };
    } catch (error) {
       console.error("Invalid URL:", error);
-      return { label: "", url: "" };
+      const errorMessage =
+         error instanceof Error ? error.message : "Unknown error";
+      throw new Error(`Failed to generate short URL: ${errorMessage}`);
    }
 };
