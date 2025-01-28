@@ -61,16 +61,18 @@ export default async function Dashboard(props: {
                   <Card key={item.shortCode}>
                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="flex items-center gap-2">
-                           <Image
-                              src={`https://icon.horse/icon/${
-                                 new URL(item.originalUrl).hostname
-                              }`}
-                              className="rounded-full"
-                              alt="link favicon"
-                              width={40}
-                              height={40}
-                              unoptimized
-                           />
+                           <div className="size-11 p-1 flex justify-center items-center rounded-full overflow-hidden ">
+                              <Image
+                                 src={`https://icon.horse/icon/${
+                                    new URL(item.originalUrl).hostname
+                                 }`}
+                                 className="h-auto w-full aspect-square"
+                                 alt="link favicon"
+                                 width={40}
+                                 height={40}
+                                 unoptimized
+                              />
+                           </div>
                            <Button
                               className="space-x-1 group hover:no-underline "
                               variant="link"
