@@ -12,7 +12,7 @@ import {
 import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
-import { ArrowUpRightIcon, Copy, EyeIcon, Plus, Trash } from "lucide-react";
+import { ArrowUpRightIcon, Copy, EyeIcon, Trash } from "lucide-react";
 import Image from "next/image";
 
 export default async function Dashboard(props: {
