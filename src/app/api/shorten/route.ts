@@ -4,10 +4,12 @@ import { createInsertSchema } from "drizzle-zod";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-const shortenRequestSchema = createInsertSchema(urls).pick({
-   originalUrl: true,
-   userId: true,
-});
+const shortenRequestSchema = createInsertSchema(urls)
+   .pick({
+      originalUrl: true,
+      userId: true,
+   })
+   .extend({ userId: z.string().nonempty() });
 
 type ShortenResponse = {
    shortUrl: string;
@@ -21,7 +23,7 @@ export async function POST(request: NextRequest) {
 
       const shortCode = await createShortUrl({
          originalUrl,
-         userId: userId ?? undefined,
+         userId: userId,
       });
 
       const shortUrl = new URL(
