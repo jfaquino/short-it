@@ -4,6 +4,7 @@ import {
    Dialog,
    DialogClose,
    DialogContent,
+   DialogDescription,
    DialogHeader,
    DialogOverlay,
    DialogTitle,
@@ -68,7 +69,7 @@ export default function AddUrlForm({ userId }: { userId: string }) {
                      htmlFor="originalUrl"
                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                     Enter website URL
+                     Paste your url here to short it!
                   </label>
 
                   <Input
@@ -104,6 +105,10 @@ export default function AddUrlForm({ userId }: { userId: string }) {
 
                <input type="hidden" name="userId" value={userId} />
 
+               <DialogDescription>
+                  Enter the website url you want to shorten.
+               </DialogDescription>
+
                {state.errors && Object.keys(state.errors).length > 0 && (
                   <div
                      role="alert"
@@ -134,7 +139,7 @@ export default function AddUrlForm({ userId }: { userId: string }) {
                      ) : (
                         <RocketIcon className="size-4" />
                      )}
-                     <span>{isPending ? "Adding..." : "Add"}</span>
+                     <span>{isPending ? "Shortening..." : "Shorten"}</span>
                   </Button>
                </footer>
             </form>
