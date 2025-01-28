@@ -9,12 +9,16 @@ import { z } from "zod";
 
 export type UrlData = {
    originalUrl: string;
-   userId?: string;
+   userId: string;
 };
 
 export async function createShortUrl(data: UrlData): Promise<string> {
    if (!isValidUrl(data.originalUrl)) {
       throw new Error("Invalid URL");
+   }
+
+   if (data.userId && typeof data.userId !== "string") {
+      throw new Error("Invalid userId");
    }
 
    const shortCode = await generateUniqueShortCode();
