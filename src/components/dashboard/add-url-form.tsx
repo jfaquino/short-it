@@ -17,8 +17,9 @@ import {
    AddNewUrl,
    AddUrlFormState,
 } from "@/server/actions/urlShortenerActions";
-import { cn } from "@/lib/utils";
+import { cn, generateShortUrl } from "@/lib/utils";
 import { useResetableActionState } from "@/hooks/use-resetable-action-state";
+import { toast } from "sonner";
 
 const initialState: AddUrlFormState = {
    success: null,
@@ -35,10 +36,17 @@ export default function AddUrlForm({ userId }: { userId: string }) {
    );
 
    useEffect(() => {
-      if (state.success) {
+      if (state.success && state.message) {
          setOpen(false);
+         console.log(state.message);
+         console.log(generateShortUrl(state.message));
+         toast.success("Link created successfully", {
+            description: `Url: ${generateShortUrl(state.message).label}`,
+            duration: 10000,
+            closeButton: true,
+         });
       }
-   }, [state.success]);
+   }, [state.message, state.success]);
 
    const handleDialogToggle = (value: boolean) => {
       setOpen(value);
