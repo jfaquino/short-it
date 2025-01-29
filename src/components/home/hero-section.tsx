@@ -1,11 +1,7 @@
 import { Scissors, BarChart2, Link as LinkIcon } from "lucide-react";
-import UrlShortener from "./url-shortener";
 import GooBackground from "@/components/layout/goo-background";
-import { auth } from "@/server/services/auth";
 
 export default async function HeroSection() {
-   const session = await auth();
-
    return (
       <section className="relative w-full min-h-screen dark:bg-gradient-to-br dark:from-gray-900/15 dark:via-purple-950/15 dark:to-indigo-900/15">
          {/* <!-- Background animation --/> */}
@@ -27,8 +23,6 @@ export default async function HeroSection() {
                      Create short, powerful links in seconds
                   </p>
                </div>
-
-               <UrlShortener user={session?.user} />
 
                <div className="mt-12 flex flex-wrap justify-center gap-6">
                   <div className="flex items-center space-x-2 ">
