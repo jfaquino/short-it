@@ -1,34 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import ShorItButton from "../links/shorItButton";
-import AuthButton from "../auth/authButton";
-import { Session } from "next-auth";
-import dynamic from "next/dynamic";
-import { Skeleton } from "../ui/skeleton";
-import { Button } from "../ui/button";
-import { GithubIcon } from "../icons/github-icon";
-import { GITHUB_URL } from "@/lib/constants";
-import ExternalLink from "@/components/links/external-link";
-
-const ThemeToggler = dynamic(
-   () => import("../theme-toggler").then((mod) => mod.ThemeToggler),
-   {
-      ssr: false,
-      loading: () => (
-         <Skeleton className="size-10 dark:bg-white/10 backdrop-blur-sm" />
-      ),
-   }
-);
 
 interface AnimatedNavProps {
-   session: Session | null;
    className?: string;
+   children?: React.ReactNode;
 }
 
 const AnimatedNav: React.FC<AnimatedNavProps> = ({
-   session,
    className = "",
+   children,
 }) => {
    const navRef = useRef<HTMLElement | null>(null);
 
@@ -90,21 +71,7 @@ const AnimatedNav: React.FC<AnimatedNavProps> = ({
 
    return (
       <nav ref={navRef} className={`transition-all duration-300 ${className}`}>
-         <div>
-            <ShorItButton />
-         </div>
-
-         <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" asChild>
-               <ExternalLink href={GITHUB_URL}>
-                  <GithubIcon className="size-5" />
-               </ExternalLink>
-            </Button>
-
-            <ThemeToggler />
-
-            <AuthButton session={session} />
-         </div>
+         {children}
       </nav>
    );
 };
