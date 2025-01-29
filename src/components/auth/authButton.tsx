@@ -1,14 +1,5 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import {
-   ArrowRightIcon,
-   HouseIcon,
-   LayoutDashboardIcon,
-   LogOutIcon,
-} from "lucide-react";
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
+import { ArrowRightIcon, HouseIcon, LayoutDashboardIcon } from "lucide-react";
 import Link from "next/link";
 import {
    DropdownMenu,
@@ -17,12 +8,12 @@ import {
    DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Image from "next/image";
+import SignoutButton from "./signout-button";
+import { auth } from "@/server/services/auth";
 
-interface AuthButtonProps {
-   session: Session | null;
-}
+export default async function AuthButton() {
+   const session = await auth();
 
-export default function AuthButton({ session }: AuthButtonProps) {
    if (session) {
       return (
          <div className="flex items-center gap-4 ">
@@ -67,12 +58,8 @@ export default function AuthButton({ session }: AuthButtonProps) {
                      </Link>
                   </DropdownMenuItem>
 
-                  <DropdownMenuItem
-                     className="flex items-center gap-3"
-                     onClick={() => signOut()}
-                  >
-                     <LogOutIcon className="size-4" />
-                     <span>Sign out</span>
+                  <DropdownMenuItem asChild>
+                     <SignoutButton className="w-full justify-start gap-3" />
                   </DropdownMenuItem>
                </DropdownMenuContent>
             </DropdownMenu>
