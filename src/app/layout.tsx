@@ -9,9 +9,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
    icons: "/short-it.svg",
-   title: "Short It - Simple and fast URL shortener!",
+   title: {
+      default:
+         "Short It - Open-Source URL Shortener with Analytics & Link Management",
+      template: "%s - Short It",
+   },
    description:
-      "An user-friendly URL shortening service designed for speed and simplicity. Short It allows users to quickly shorten long URLs, making them easier to share and manage.",
+      "Short-It is a fast and user-friendly URL shortener that makes sharing and managing links effortless. Shorten long URLs in seconds and track real-time analytics—all for free.",
 };
 
 export default async function RootLayout({
