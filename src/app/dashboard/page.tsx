@@ -13,7 +13,12 @@ import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
 import { ArrowUpRightIcon, Copy, EyeIcon, Trash } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+   title: "Dashboard",
+};
 
 export default async function Dashboard(props: {
    searchParams?: Promise<{

@@ -2,6 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatNumber } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+   title: "Analytics",
+};
 
 export default async function page() {
    const session = await auth();
