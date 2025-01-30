@@ -15,61 +15,42 @@ export default function Home() {
                <GooBackground />
             </div>
 
-            <div className="w-full min-h-screen z-10 backdrop-blur-lg  flex justify-center items-start sm:items-center py-24  px-4 sm:px-6 lg:px-8 ">
-               <div className=" max-w-4xl w-full space-y-8 text-center ">
-                  <div className="space-y-4">
-                     <h1 className="flex flex-col text-2xl sm:text-3xl md:text-5xl ">
-                        <span className="font-mono font-extrabold tracking-tighter">
-                           Shorten. Share. Track. Simplify
-                        </span>
-                        <span className="font-bold text-purple-500 dark:text-purple-400">
-                           your Urls with ease!
-                        </span>
-                     </h1>
-                     <p className="text-sm sm:text-lg text-balance">
-                        Shorten long Urls, track analytics, and manage links
-                        effortlessly—all open-source and free!
-                     </p>
-                  </div>
+            <div className="w-full min-h-screen z-10 backdrop-blur-lg flex justify-center items-center px-4 sm:px-6 lg:px-8">
+               <div className="max-w-3xl w-full space-y-4 sm:space-y-5 text-center">
+                  <h1 className="font-extrabold text-2xl sm:text-4xl md:text-5xl text-balance text-purple-500 dark:text-purple-400">
+                     <span className=" inline-flex flex-col overflow-hidden h-[calc(theme(fontSize.2xl)*theme(lineHeight.tight))] sm:h-[calc(theme(fontSize.4xl)*theme(lineHeight.tight))] md:h-[calc(theme(fontSize.5xl)*theme(lineHeight.tight))] ">
+                        <ul className="block animate-text-slide-4 text-center sm:text-right leading-tight [&_li]:block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 ">
+                           <li>Shorten</li>
+                           <li>Share</li>
+                           <li>Track</li>
+                           <li>Handle</li>
+                           <li aria-hidden="true">Shorten</li>
+                        </ul>
+                     </span>
+                     {" your Urls with ease!"}
+                  </h1>
+                  <p className="text-sm sm:text-lg text-balance">
+                     Shorten long Urls, track analytics, and manage links
+                     effortlessly—all open-source and free!
+                  </p>
 
-                  {/* <div className="mt-12 flex flex-wrap justify-center gap-6">
-                  <div className="flex items-center space-x-2 ">
-                     <Scissors className="h-6 w-6 text-indigo-400" />
-                     <span>Manage your urls </span>
-                  </div>
-                  <div className="flex items-center space-x-2 ">
-                     <BarChart2 className="h-6 w-6 text-indigo-400" />
-                     <span>Detailed analytics</span>
-                  </div>
-                  <div className="flex items-center space-x-2 ">
-                     <LinkIcon className="h-6 w-6 text-indigo-400" />
-                     <span>Open source</span>
-                  </div>
-               </div> */}
-
-                  <div className="mt-8 flex items-center justify-center duration-700 animate-in fade-in-30 md:space-x-3 space-x-2">
+                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-3 ">
                      <Button asChild>
                         <Link
                            href="/dashboard"
-                           className="group flex items-center gap-4"
+                           className="group flex items-center gap-3"
                         >
-                           <LinkIcon
-                              size={18}
-                              className="duration-300 group-hover:rotate-6"
-                           />
-                           <span>Create a Short Url</span>
+                           <LinkIcon className="size-4 duration-300 group-hover:rotate-6" />
+                           <span>Get started now!</span>
                         </Link>
                      </Button>
 
                      <Button asChild variant="outline">
                         <ExternalLink
-                           className="group flex items-center gap-4"
+                           className="group flex items-center gap-3"
                            href={GITHUB_URL}
                         >
-                           <GithubIcon
-                              height={18}
-                              className="duration-300 group-hover:rotate-4"
-                           />
+                           <GithubIcon className="size-4 duration-300 group-hover:rotate-4" />
                            <span>Star on GitHub</span>
                         </ExternalLink>
                      </Button>
