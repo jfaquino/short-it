@@ -12,7 +12,14 @@ import {
 import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlShortener";
-import { ArrowUpRightIcon, Copy, EyeIcon, Trash } from "lucide-react";
+import {
+   ArrowUpRightIcon,
+   Copy,
+   EyeIcon,
+   PackageOpenIcon,
+   SparklesIcon,
+   Trash,
+} from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
 
@@ -27,6 +34,7 @@ export default async function Dashboard(props: {
 }) {
    const session = await auth();
    const searchParams = await props.searchParams;
+   const searchQuery = searchParams?.query;
 
    const data =
       session && session.user?.id && (await getUrlByUser(session.user?.id));
@@ -147,6 +155,24 @@ export default async function Dashboard(props: {
                      </CardFooter>
                   </Card>
                ))}
+
+               {filteredUrlData.length === 0 && (
+                  <div className="mt-4 flex flex-col items-center justify-center space-y-3 text-center">
+                     {searchQuery ? (
+                        <PackageOpenIcon size={48} strokeWidth={0.5} />
+                     ) : (
+                        <SparklesIcon size={48} strokeWidth={0.5} />
+                     )}
+                     {searchQuery ? (
+                        <p>
+                           No links found with{" "}
+                           <span className="font-mono">{searchQuery}</span>
+                        </p>
+                     ) : (
+                        <p>No links found in your account, create one now!</p>
+                     )}
+                  </div>
+               )}
             </div>
          </div>
       </>
