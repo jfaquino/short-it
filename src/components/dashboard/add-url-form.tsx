@@ -38,8 +38,7 @@ export default function AddUrlForm({ userId }: { userId: string }) {
    useEffect(() => {
       if (state.success && state.message) {
          setOpen(false);
-         console.log(state.message);
-         console.log(generateShortUrl(state.message));
+
          toast.success("Link created successfully", {
             description: `Url: ${generateShortUrl(state.message).label}`,
             duration: 10000,
