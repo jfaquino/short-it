@@ -13,10 +13,7 @@ import { Button } from "@/components/ui/button";
 import { CircleXIcon, LoaderIcon, Plus, RocketIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import {
-   AddNewUrl,
-   AddUrlFormState,
-} from "@/server/actions/urlShortenerActions";
+import { AddNewUrl, AddUrlFormState } from "@/server/actions/urlActions";
 import { cn, generateShortUrl } from "@/lib/utils";
 import { useResetableActionState } from "@/hooks/use-resetable-action-state";
 import { toast } from "sonner";

@@ -2,10 +2,7 @@
 
 import { LoaderIcon, TrashIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-   deleteUrl,
-   DeleteUrlFormState,
-} from "@/server/actions/urlShortenerActions";
+import { deleteUrl, DeleteUrlFormState } from "@/server/actions/urlActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
