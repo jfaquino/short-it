@@ -1,4 +1,5 @@
 import AddUrlForm from "@/components/dashboard/add-url-form";
+import DeleteUrlButton from "@/components/dashboard/delete-url-form";
 import SearchBar from "@/components/dashboard/search-bar";
 import ExternalLink from "@/components/links/external-link";
 import { Button } from "@/components/ui/button";
@@ -117,13 +118,8 @@ export default async function Dashboard(props: {
                            >
                               <Copy className="size-4" />
                            </Button>
-                           <Button
-                              variant="outline"
-                              className="size-8"
-                              size="icon"
-                           >
-                              <Trash className="size-4" />
-                           </Button>
+
+                           <DeleteUrlButton urlId={item.id} />
                         </div>
                      </CardHeader>
 

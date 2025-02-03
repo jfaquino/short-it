@@ -49,6 +49,27 @@ export async function createShortUrl(data: UrlData): Promise<string> {
 
 const urlSchema = createSelectSchema(urls);
 
+export async function removeUrl(id: number): Promise<void> {
+   try {
+      await db.transaction(async (trx) => {
+         const urlExists = await trx
+            .select({ id: urls.id })
+            .from(urls)
+            .where(eq(urls.id, id))
+            .execute();
+
+         if (urlExists.length === 0) {
+            throw new Error("URL not found");
+         }
+
+         await trx.delete(urls).where(eq(urls.id, id));
+      });
+   } catch (error) {
+      console.error("Error deleting URL:", error);
+      throw new Error("Failed to delete URL");
+   }
+}
+
 export async function getUrlByShortCode(
    shortCode: string
 ): Promise<z.infer<typeof urlSchema> | null> {

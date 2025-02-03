@@ -1,6 +1,6 @@
 "use server";
 import { z } from "zod";
-import { createShortUrl } from "../services/urlService";
+import { createShortUrl, removeUrl } from "../services/urlService";
 import { createInsertSchema } from "drizzle-zod";
 import { urls } from "@/db/schema";
 import { revalidatePath } from "next/cache";
@@ -59,6 +59,28 @@ export async function AddNewUrl(
       return {
          success: false,
          message: "Failed to create short URL.",
+      };
+   }
+}
+
+export type DeleteUrlFormState = {
+   success: boolean | null;
+   message?: string | null;
+};
+
+export async function deleteUrl(id: number) {
+   try {
+      await removeUrl(id);
+      revalidatePath("/dashboard");
+      return { success: true, message: "URL deleted successfully" };
+   } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+         return { success: false, message: error.message };
+      }
+      return {
+         success: false,
+         message: "Failed to delete URL.",
       };
    }
 }
