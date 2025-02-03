@@ -69,7 +69,10 @@ export default async function AuthButton() {
 
    return (
       <Button variant="ghost" size="sm" asChild>
-         <Link className="flex items-center gap-2" href={"/dashboard"}>
+         <Link
+            className="hidden sm:flex items-center gap-2"
+            href={"/dashboard"}
+         >
             <span>Get Started</span>
             <ArrowRightIcon className="size-4" />
          </Link>
