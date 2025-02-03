@@ -6,7 +6,7 @@ export const urlStats = sqliteTable("url_stats", {
    id: integer("id").primaryKey({ autoIncrement: true }),
    urlId: integer("urlId")
       .notNull()
-      .references(() => urls.id),
+      .references(() => urls.id, { onDelete: "cascade" }),
    accessedAt: text("accessed_at")
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
