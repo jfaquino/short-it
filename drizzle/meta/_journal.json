@@ -43,6 +43,13 @@
       "when": 1726255420355,
       "tag": "0008_petite_mentallo",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1738604543815,
+      "tag": "0009_blushing_star_brand",
+      "breakpoints": true
     }
   ]
 }
