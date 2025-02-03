@@ -1,6 +1,6 @@
 "use server";
 import { z } from "zod";
-import { createShortUrl } from "../services/urlShortener";
+import { createShortUrl } from "../services/urlService";
 import { createInsertSchema } from "drizzle-zod";
 import { urls } from "@/db/schema";
 import { revalidatePath } from "next/cache";

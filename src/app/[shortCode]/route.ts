@@ -2,12 +2,15 @@ import { getIpInfo } from "@/server/services/ipService";
 import {
    getUrlByShortCode,
    recordUrlAccess,
-} from "@/server/services/urlShortener";
+} from "@/server/services/urlService";
 import { NextRequest, NextResponse } from "next/server";
 import { ipAddress as ipAddress1 } from "@vercel/functions";
 import { UAParser } from "ua-parser-js";
 
-export async function GET(request: NextRequest, props: { params: Promise<{ shortCode: string }> }) {
+export async function GET(
+   request: NextRequest,
+   props: { params: Promise<{ shortCode: string }> }
+) {
    const params = await props.params;
    const { shortCode } = params;
 

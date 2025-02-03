@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatNumber } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
-import { getUrlByUser } from "@/server/services/urlShortener";
+import { getUrlByUser } from "@/server/services/urlService";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

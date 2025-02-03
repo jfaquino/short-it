@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { formatDate, formatNumber, generateShortUrl } from "@/lib/utils";
 import { auth } from "@/server/services/auth";
-import { getUrlByUser } from "@/server/services/urlShortener";
+import { getUrlByUser } from "@/server/services/urlService";
 import {
    ArrowUpRightIcon,
    Copy,
