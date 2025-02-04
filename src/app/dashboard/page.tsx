@@ -114,7 +114,10 @@ export default async function Dashboard(props: {
                            <Copy className="size-4" />
                         </Button>
 
-                        <DeleteUrlButton urlId={item.id} />
+                        <DeleteUrlButton
+                           urlId={item.id}
+                           shortCode={item.shortCode}
+                        />
                      </div>
                   </CardHeader>
 
