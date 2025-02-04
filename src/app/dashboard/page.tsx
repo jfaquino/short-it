@@ -1,4 +1,5 @@
 import AddUrlForm from "@/components/dashboard/add-url-form";
+import ClipboardCopyButton from "@/components/dashboard/clipboard-copy-button";
 import DeleteUrlButton from "@/components/dashboard/delete-url-form";
 import SearchBar from "@/components/dashboard/search-bar";
 import ExternalLink from "@/components/links/external-link";
@@ -15,7 +16,6 @@ import { auth } from "@/server/services/auth";
 import { getUrlByUser } from "@/server/services/urlService";
 import {
    ArrowUpRightIcon,
-   Copy,
    EyeIcon,
    PackageOpenIcon,
    SparklesIcon,
@@ -68,87 +68,84 @@ export default async function Dashboard(props: {
          </header>
 
          <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-            {filteredUrlData.map((item) => (
-               <Card key={item.shortCode}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                     <CardTitle className="flex items-center gap-2">
-                        <div className="size-11 p-1 flex justify-center items-center rounded-full overflow-hidden ">
-                           <Image
-                              src={`https://icon.horse/icon/${
-                                 new URL(item.originalUrl).hostname
-                              }`}
-                              className="h-auto w-full aspect-square"
-                              alt="link favicon"
-                              width={40}
-                              height={40}
-                              unoptimized
+            {filteredUrlData.map((item) => {
+               const shortCodeUrl = generateShortUrl(item.shortCode).url;
+               return (
+                  <Card key={item.shortCode}>
+                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="flex items-center gap-2">
+                           <div className="size-11 p-1 flex justify-center items-center rounded-full overflow-hidden ">
+                              <Image
+                                 src={`https://icon.horse/icon/${
+                                    new URL(item.originalUrl).hostname
+                                 }`}
+                                 className="h-auto w-full aspect-square"
+                                 alt="link favicon"
+                                 width={40}
+                                 height={40}
+                                 unoptimized
+                              />
+                           </div>
+                           <Button
+                              className="space-x-1 group hover:no-underline "
+                              variant="link"
+                              asChild
+                           >
+                              <ExternalLink href={shortCodeUrl}>
+                                 <span className="text-xl opacity-60">
+                                    {"/"}
+                                 </span>
+
+                                 <span className="text-base font-bold tracking-wider ">
+                                    {`${item.shortCode}`}
+                                 </span>
+                                 <ArrowUpRightIcon
+                                    className="size-5 ml-3 scale-75 transition duration-300 
+                                                   group-hover:rotate-6 group-hover:scale-100"
+                                 />
+                              </ExternalLink>
+                           </Button>
+                        </CardTitle>
+
+                        <div className="flex space-x-2">
+                           <ClipboardCopyButton url={shortCodeUrl} />
+
+                           <DeleteUrlButton
+                              urlId={item.id}
+                              shortCode={item.shortCode}
                            />
                         </div>
-                        <Button
-                           className="space-x-1 group hover:no-underline "
-                           variant="link"
-                           asChild
+                     </CardHeader>
+
+                     <CardContent className="overflow-hidden truncate text-secondary-foreground">
+                        <span
+                           className="truncate select-all font-mono text-sm"
+                           title={item.originalUrl}
                         >
-                           <ExternalLink
-                              href={generateShortUrl(item.shortCode).url}
-                           >
-                              <span className="text-xl opacity-60">{"/"}</span>
-
-                              <span className="text-base font-bold tracking-wider ">
-                                 {`${item.shortCode}`}
-                              </span>
-                              <ArrowUpRightIcon
-                                 className="size-5 ml-3 scale-75 transition duration-300 
-                                                   group-hover:rotate-6 group-hover:scale-100"
-                              />
-                           </ExternalLink>
-                        </Button>
-                     </CardTitle>
-
-                     <div className="flex space-x-2">
-                        <Button
-                           variant="outline"
-                           className="size-8"
-                           size="icon"
-                        >
-                           <Copy className="size-4" />
-                        </Button>
-
-                        <DeleteUrlButton
-                           urlId={item.id}
-                           shortCode={item.shortCode}
-                        />
-                     </div>
-                  </CardHeader>
-
-                  <CardContent className="overflow-hidden truncate text-secondary-foreground">
-                     <span
-                        className="truncate select-all font-mono text-sm"
-                        title={item.originalUrl}
-                     >
-                        {item.originalUrl}
-                     </span>
-                  </CardContent>
-
-                  <CardFooter
-                     className="flex items-center justify-between gap-4
-                                          text-xs text-muted-foreground font-mono"
-                  >
-                     <div className="flex items-center gap-1" title="visits">
-                        <EyeIcon className="size-4" />
-                        <span>
-                           {formatNumber(item.urlStats.length, {
-                              notation: "compact",
-                           })}
+                           {item.originalUrl}
                         </span>
-                     </div>
+                     </CardContent>
 
-                     <span title="Created On">
-                        {formatDate(new Date(item.createdAt))}
-                     </span>
-                  </CardFooter>
-               </Card>
-            ))}
+                     <CardFooter
+                        className="flex items-center justify-between gap-4
+                                          text-xs text-muted-foreground font-mono"
+                     >
+                        <div className="flex items-center gap-1" title="visits">
+                           <EyeIcon className="size-4" />
+                           <span>
+                              {formatNumber(item.urlStats.length, {
+                                 notation: "compact",
+                              })}
+                           </span>
+                        </div>
+
+                        <span title="Created On">
+                           {formatDate(new Date(item.createdAt))}
+                        </span>
+                     </CardFooter>
+                  </Card>
+               );
+            })}
 
             {filteredUrlData.length === 0 && (
                <div className="mt-4 flex flex-col items-center justify-center space-y-3 text-center">
