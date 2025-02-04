@@ -19,7 +19,6 @@ import {
    EyeIcon,
    PackageOpenIcon,
    SparklesIcon,
-   Trash,
 } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -61,116 +60,111 @@ export default async function Dashboard(props: {
         });
 
    return (
-      <>
-         {/* URL Management */}
-         <div className="bg-white dark:bg-gray-800/40 rounded-lg shadow p-6 mb-8">
-            <header className="mb-3 flex w-full items-center space-x-2 md:justify-between">
-               <SearchBar className="w-full md:w-72 md:max-w-72" />
+      <div className="bg-white dark:bg-gray-800/40 rounded-lg shadow p-6 mb-8">
+         <header className="mb-3 flex w-full items-center space-x-2 md:justify-between">
+            <SearchBar className="w-full md:w-72 md:max-w-72" />
 
-               {session?.user?.id && <AddUrlForm userId={session.user?.id} />}
-            </header>
+            {session?.user?.id && <AddUrlForm userId={session.user?.id} />}
+         </header>
 
-            <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-               {filteredUrlData.map((item) => (
-                  <Card key={item.shortCode}>
-                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="flex items-center gap-2">
-                           <div className="size-11 p-1 flex justify-center items-center rounded-full overflow-hidden ">
-                              <Image
-                                 src={`https://icon.horse/icon/${
-                                    new URL(item.originalUrl).hostname
-                                 }`}
-                                 className="h-auto w-full aspect-square"
-                                 alt="link favicon"
-                                 width={40}
-                                 height={40}
-                                 unoptimized
-                              />
-                           </div>
-                           <Button
-                              className="space-x-1 group hover:no-underline "
-                              variant="link"
-                              asChild
-                           >
-                              <ExternalLink
-                                 href={generateShortUrl(item.shortCode).url}
-                              >
-                                 <span className="text-xl opacity-60">
-                                    {"/"}
-                                 </span>
-
-                                 <span className="text-base font-bold tracking-wider ">
-                                    {`${item.shortCode}`}
-                                 </span>
-                                 <ArrowUpRightIcon
-                                    className="size-5 ml-3 scale-75 transition duration-300 
-                                                   group-hover:rotate-6 group-hover:scale-100"
-                                 />
-                              </ExternalLink>
-                           </Button>
-                        </CardTitle>
-
-                        <div className="flex space-x-2">
-                           <Button
-                              variant="outline"
-                              className="size-8"
-                              size="icon"
-                           >
-                              <Copy className="size-4" />
-                           </Button>
-
-                           <DeleteUrlButton urlId={item.id} />
+         <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+            {filteredUrlData.map((item) => (
+               <Card key={item.shortCode}>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                     <CardTitle className="flex items-center gap-2">
+                        <div className="size-11 p-1 flex justify-center items-center rounded-full overflow-hidden ">
+                           <Image
+                              src={`https://icon.horse/icon/${
+                                 new URL(item.originalUrl).hostname
+                              }`}
+                              className="h-auto w-full aspect-square"
+                              alt="link favicon"
+                              width={40}
+                              height={40}
+                              unoptimized
+                           />
                         </div>
-                     </CardHeader>
-
-                     <CardContent className="overflow-hidden truncate text-secondary-foreground">
-                        <span
-                           className="truncate select-all font-mono text-sm"
-                           title={item.originalUrl}
+                        <Button
+                           className="space-x-1 group hover:no-underline "
+                           variant="link"
+                           asChild
                         >
-                           {item.originalUrl}
-                        </span>
-                     </CardContent>
+                           <ExternalLink
+                              href={generateShortUrl(item.shortCode).url}
+                           >
+                              <span className="text-xl opacity-60">{"/"}</span>
 
-                     <CardFooter
-                        className="flex items-center justify-between gap-4
-                                          text-xs text-muted-foreground font-mono"
+                              <span className="text-base font-bold tracking-wider ">
+                                 {`${item.shortCode}`}
+                              </span>
+                              <ArrowUpRightIcon
+                                 className="size-5 ml-3 scale-75 transition duration-300 
+                                                   group-hover:rotate-6 group-hover:scale-100"
+                              />
+                           </ExternalLink>
+                        </Button>
+                     </CardTitle>
+
+                     <div className="flex space-x-2">
+                        <Button
+                           variant="outline"
+                           className="size-8"
+                           size="icon"
+                        >
+                           <Copy className="size-4" />
+                        </Button>
+
+                        <DeleteUrlButton urlId={item.id} />
+                     </div>
+                  </CardHeader>
+
+                  <CardContent className="overflow-hidden truncate text-secondary-foreground">
+                     <span
+                        className="truncate select-all font-mono text-sm"
+                        title={item.originalUrl}
                      >
-                        <div className="flex items-center gap-1" title="visits">
-                           <EyeIcon className="size-4" />
-                           <span>
-                              {formatNumber(item.urlStats.length, {
-                                 notation: "compact",
-                              })}
-                           </span>
-                        </div>
+                        {item.originalUrl}
+                     </span>
+                  </CardContent>
 
-                        <span title="Created On">
-                           {formatDate(new Date(item.createdAt))}
+                  <CardFooter
+                     className="flex items-center justify-between gap-4
+                                          text-xs text-muted-foreground font-mono"
+                  >
+                     <div className="flex items-center gap-1" title="visits">
+                        <EyeIcon className="size-4" />
+                        <span>
+                           {formatNumber(item.urlStats.length, {
+                              notation: "compact",
+                           })}
                         </span>
-                     </CardFooter>
-                  </Card>
-               ))}
+                     </div>
 
-               {filteredUrlData.length === 0 && (
-                  <div className="mt-4 flex flex-col items-center justify-center space-y-3 text-center">
-                     {searchQuery ? (
-                        <PackageOpenIcon size={48} strokeWidth={0.5} />
-                     ) : (
-                        <SparklesIcon size={48} strokeWidth={0.5} />
-                     )}
-                     {searchQuery ? (
-                        <p>
-                           No links found with{" "}
-                           <span className="font-mono">{searchQuery}</span>
-                        </p>
-                     ) : (
-                        <p>No links found in your account, create one now!</p>
-                     )}
-                  </div>
-               )}
-            </div>
+                     <span title="Created On">
+                        {formatDate(new Date(item.createdAt))}
+                     </span>
+                  </CardFooter>
+               </Card>
+            ))}
+
+            {filteredUrlData.length === 0 && (
+               <div className="mt-4 flex flex-col items-center justify-center space-y-3 text-center">
+                  {searchQuery ? (
+                     <PackageOpenIcon size={48} strokeWidth={0.5} />
+                  ) : (
+                     <SparklesIcon size={48} strokeWidth={0.5} />
+                  )}
+                  {searchQuery ? (
+                     <p>
+                        No links found with{" "}
+                        <span className="font-mono">{searchQuery}</span>
+                     </p>
+                  ) : (
+                     <p>No links found in your account, create one now!</p>
+                  )}
+               </div>
+            )}
          </div>
-      </>
+      </div>
    );
 }
