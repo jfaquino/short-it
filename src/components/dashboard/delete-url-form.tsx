@@ -46,8 +46,6 @@ export default function DeleteUrlButton({
       }
    }, [state]);
 
-   console.log(state);
-
    return (
       <Dialog>
          <DialogTrigger asChild>
