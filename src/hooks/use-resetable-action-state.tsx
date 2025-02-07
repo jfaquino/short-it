@@ -1,4 +1,4 @@
-import { useActionState, startTransition } from "react";
+import { useActionState, startTransition, useCallback } from "react";
 
 export function useResetableActionState<State, Payload>(
    action: (state: Awaited<State>, payload: Payload) => State | Promise<State>,
@@ -21,15 +21,18 @@ export function useResetableActionState<State, Payload>(
       permalink
    );
 
-   const dispatch = (payload: Payload | null) => {
-      startTransition(() => {
-         submit(payload);
-      });
-   };
+   const dispatch = useCallback(
+      (payload: Payload | null) => {
+         startTransition(() => {
+            submit(payload);
+         });
+      },
+      [submit]
+   );
 
-   const reset = () => {
+   const reset = useCallback(() => {
       dispatch(null);
-   };
+   }, [dispatch]);
 
    return [state, dispatch, isPending, reset];
 }
