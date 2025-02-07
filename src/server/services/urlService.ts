@@ -148,7 +148,7 @@ export async function recordUrlAccess(
 
 const urlStatsSchema = createSelectSchema(urlStats);
 
-const getUrlResponse = urlSchema
+const urlWithStatsResponseSchema = urlSchema
    .extend({
       urlStats: urlStatsSchema.array(),
    })
@@ -161,7 +161,7 @@ export async function getUrlByUser(userId: string) {
       orderBy: desc(urls.createdAt),
    });
 
-   return getUrlResponse.parse(urlList);
+   return urlWithStatsResponseSchema.parse(urlList);
 }
 
 async function generateUniqueShortCode(): Promise<string> {

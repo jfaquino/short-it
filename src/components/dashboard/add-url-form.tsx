@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { CircleXIcon, LoaderIcon, Plus, RocketIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { AddNewUrl, AddUrlFormState } from "@/server/actions/urlActions";
+import { addNewUrl, AddUrlFormState } from "@/server/actions/urlActions";
 import { cn, generateShortUrl } from "@/lib/utils";
 import { useResetableActionState } from "@/hooks/use-resetable-action-state";
 import { toast } from "sonner";
@@ -28,7 +28,7 @@ export default function AddUrlForm({ userId }: { userId: string }) {
    const [open, setOpen] = useState<boolean>(false);
 
    const [state, formAction, isPending, reset] = useResetableActionState(
-      AddNewUrl,
+      addNewUrl,
       initialState
    );
 

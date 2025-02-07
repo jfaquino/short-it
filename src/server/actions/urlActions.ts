@@ -14,7 +14,7 @@ export type AddUrlFormState = {
    message?: string | null;
 };
 
-const AddUrlSchema = createInsertSchema(urls)
+const addUrlSchema = createInsertSchema(urls)
    .pick({
       originalUrl: true,
       userId: true,
@@ -24,11 +24,11 @@ const AddUrlSchema = createInsertSchema(urls)
       originalUrl: z.string().url(),
    });
 
-export async function AddNewUrl(
+export async function addNewUrl(
    prevState: AddUrlFormState,
    formData: FormData
 ) {
-   const validatedFields = AddUrlSchema.safeParse({
+   const validatedFields = addUrlSchema.safeParse({
       originalUrl: formData.get("originalUrl"),
       userId: formData.get("userId"),
    });
